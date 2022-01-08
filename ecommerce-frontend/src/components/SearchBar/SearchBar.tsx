@@ -5,9 +5,10 @@ import { MdSearch } from "react-icons/md";
 export interface SearchBarProps {
     onSearch?: (searchTerm: string) => void;
     placeholder?: string;
+    className?: string;
 }
 
-const SearchBar = ({ onSearch = () => {}, placeholder }: SearchBarProps) => {
+const SearchBar = ({ onSearch = () => {}, placeholder, className }: SearchBarProps) => {
     const [isFocused, setIsFocused] = React.useState(false);
     const inputPlaceholder = isFocused ? '' : placeholder;
     const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +16,7 @@ const SearchBar = ({ onSearch = () => {}, placeholder }: SearchBarProps) => {
     };
 
     return (
-        <div className={styles.container}>
+        <div className={`${styles.container} ${className}`}>
             <div className={styles.innerContainer}>
                 <MdSearch className={styles.icon} width={"20px"} />
                 <input
