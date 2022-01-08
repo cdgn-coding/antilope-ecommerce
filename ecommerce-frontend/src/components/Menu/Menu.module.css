@@ -1,0 +1,31 @@
+.container {
+    display: inline-block;
+    background: white;
+}
+
+.innerContainer {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.menuItem {
+    margin: 8px 0;
+}
+
+.menuItem a {
+    color: #000000;
+    background: linear-gradient(to right, #9A56FF, #9A56FF 50%, #000000 50%);
+    transition: background-position cubic-bezier(0.075, 0.82, 0.165, 1) 300ms;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 100%;
+    background-position: 100%;
+}
+
+.menuItem a:hover {
+    background-position: 0 100%;
+}
