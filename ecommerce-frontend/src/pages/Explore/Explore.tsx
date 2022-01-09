@@ -23,10 +23,17 @@ const Explore = () => {
         loading,
         onSearch,
         onNext,
-        onPrevious
+        onPrevious,
+        onSelectCategory,
     } = useProducts();
     return (
-        <Layout withSecondaryMenu onSearch={onSearch} loading={loading}>
+        <Layout
+            withSecondaryMenu
+            onSearch={onSearch}
+            loading={loading}
+            withoutCategoryLinks
+            onSelectCategory={onSelectCategory}
+        >
             <div className={styles.container}>
                 <div className={styles.innerContainer}>
                     <div className={styles.productList}>

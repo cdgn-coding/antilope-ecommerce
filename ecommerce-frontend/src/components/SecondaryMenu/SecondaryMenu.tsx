@@ -1,26 +1,34 @@
 import React from 'react';
 import styles from './SecondaryMenu.module.css';
-import Button from '@components/Button';
-import Link from '@components/Link';
+import { Category } from '@models/Category';
+import SecondaryMenuButton from './SecondaryMenuButton';
 
-export interface SecondaryMenuItemProps {
-    label: string;
-    path: string;
+
+export interface SecondaryMenuItem {
+    label: string
+    path: string
+    category: Category
 }
+
 
 export interface SecondaryMenuProps {
-    items: SecondaryMenuItemProps[];
+    items: SecondaryMenuItem[];
+    withoutLinks?: boolean;
+    onCategoryClick?: (category: Category) => void;
 }
 
-const SecondaryMenu = ({ items = []}: SecondaryMenuProps) => {
-    const renderItem = ({ label, path }: SecondaryMenuItemProps) => {
+const SecondaryMenu = ({ items = [], withoutLinks = false, onCategoryClick = () => {} }: SecondaryMenuProps) => {
+    const renderItem = (item: SecondaryMenuItem) => {
+        const onClick = () => onCategoryClick(item.category);
         return (
-            <div className={styles.item}>
-                <Link href={path}>
-                    <Button type="primary">{label}</Button>
-                </Link>
-            </div>
-        )
+            <SecondaryMenuButton
+                key={item.path}
+                label={item.label}
+                path={item.path}
+                onClick={onClick}
+                withoutLinks={withoutLinks}
+            />
+        );
     }
 
     return (
