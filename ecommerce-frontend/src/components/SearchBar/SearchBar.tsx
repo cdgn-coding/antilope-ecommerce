@@ -24,7 +24,7 @@ const SearchBar = ({
         onSearch(searchTerm);
       }
     },
-    [searchTerm]
+    [searchTerm, onSearch]
   );
 
   return (
