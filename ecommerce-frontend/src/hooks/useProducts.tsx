@@ -1,28 +1,34 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Product } from '@models/Product';
-import { Category } from '@models/Category';
-import { PaginatedResponse } from '@models/PaginatedResponse';
+import { useState, useEffect, useCallback } from "react";
+import { Product } from "@models/Product";
+import { Category } from "@models/Category";
+import { PaginatedResponse } from "@models/PaginatedResponse";
 
 type SearchProductsResponse = PaginatedResponse<Product>;
 
-const fetchProducts = async (search: string, page: number, category: Category): Promise<SearchProductsResponse> => {
-  return await fetch(`/api/products?search=${search}&page=${page}&category=${category}`).then(res => res.json());
-}
+const fetchProducts = async (
+  search: string,
+  page: number,
+  category: Category
+): Promise<SearchProductsResponse> => {
+  return await fetch(
+    `/api/products?search=${search}&page=${page}&category=${category}`
+  ).then((res) => res.json());
+};
 
 type useProductsHook = () => {
   loading: boolean;
   error: unknown;
-  onSearch: (search: string) => void
-  onNext: () => void
-  onPrevious: () => void
-  onSelectCategory: (category: Category) => void
+  onSearch: (search: string) => void;
+  onNext: () => void;
+  onPrevious: () => void;
+  onSelectCategory: (category: Category) => void;
 } & PaginatedResponse<Product>;
 
 const useProducts: useProductsHook = () => {
   const [data, setData] = useState<SearchProductsResponse>({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [category, setCategory] = useState<Category>(Category.ALL);
   const [page, setPage] = useState(1);
 
@@ -57,8 +63,8 @@ const useProducts: useProductsHook = () => {
     onSearch,
     onNext,
     onPrevious,
-    onSelectCategory
+    onSelectCategory,
   };
-}
+};
 
 export default useProducts;

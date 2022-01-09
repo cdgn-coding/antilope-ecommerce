@@ -1,25 +1,25 @@
 // Basic storybook for product card component
-import React from 'react';
-import ProductCard, { ProductCardProps } from './ProductCard';
-import productImage from './fixtures/image.jpg';
+import React from "react";
+import ProductCard, { ProductCardProps } from "./ProductCard";
+import productImage from "./fixtures/image.jpg";
 
 export default {
   component: ProductCard,
-  title: 'ProductCard',
+  title: "ProductCard",
   argTypes: {
     images: {
-      type: 'array',
-      defaultValue: [productImage]
+      type: "array",
+      defaultValue: [productImage],
     },
     name: {
-      defaultValue: 'Auriculares Beats Solo3 Wireless',
-      control: { type: 'text' },
+      defaultValue: "Auriculares Beats Solo3 Wireless",
+      control: { type: "text" },
     },
     price: {
       defaultValue: 2500,
-      control: { type: 'text' },
-    }
-  }
+      control: { type: "text" },
+    },
+  },
 };
 
-export const Default = (args: ProductCardProps) => (<ProductCard {...args} />);
+export const Default = (args: ProductCardProps) => <ProductCard {...args} />;

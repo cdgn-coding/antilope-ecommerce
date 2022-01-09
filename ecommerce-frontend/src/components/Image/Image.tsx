@@ -1,12 +1,12 @@
-import React from 'react';
-import NextImage, { ImageProps } from 'next/image';
+import React from "react";
+import NextImage, { ImageProps } from "next/image";
 
 const Image = (props: ImageProps) => {
-    if (process?.env?.STORYBOOK) {
-        return <NextImage {...props} unoptimized />
-    }
+  if (process?.env?.STORYBOOK) {
+    return <NextImage {...props} unoptimized />;
+  }
 
-    return <NextImage {...props} />
+  return <NextImage {...props} />;
 };
 
 export default Image;

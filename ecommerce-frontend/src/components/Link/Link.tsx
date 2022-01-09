@@ -1,17 +1,17 @@
-import React from 'react';
-import NextLink from 'next/link';
+import React from "react";
+import NextLink from "next/link";
 
 export interface LinkProps {
-    children: React.ReactNode;
-    href: string;
+  children: React.ReactNode;
+  href: string;
 }
 
 const Link = ({ children, href }: LinkProps) => {
-    if (process?.env?.STORYBOOK) {
-        return <a href={String(href)}>{children}</a>;
-    }
+  if (process?.env?.STORYBOOK) {
+    return <a href={String(href)}>{children}</a>;
+  }
 
-    return <NextLink href={href}>{children}</NextLink>;
-}
+  return <NextLink href={href}>{children}</NextLink>;
+};
 
 export default Link;

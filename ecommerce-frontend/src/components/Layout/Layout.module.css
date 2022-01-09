@@ -1,37 +1,37 @@
 .container {
-    position: relative;
+  position: relative;
 }
 
 .container.menuOpen {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .contentContainer {
-    position: relative;
-    left: 0;
-    transition: left cubic-bezier(0.075, 0.82, 0.165, 1) 300ms;
+  position: relative;
+  left: 0;
+  transition: left cubic-bezier(0.075, 0.82, 0.165, 1) 300ms;
 }
 
 .menuOpen .contentContainer {
-    left: 150px;
+  left: 150px;
 }
 
 .menuContainer {
-    position: fixed;
-    left: -150px;
-    width: 150px;
-    transition: left cubic-bezier(0.075, 0.82, 0.165, 1) 300ms;
-    padding: 0 16px;
-    height: 100%;
+  position: fixed;
+  left: -150px;
+  width: 150px;
+  transition: left cubic-bezier(0.075, 0.82, 0.165, 1) 300ms;
+  padding: 0 16px;
+  height: 100%;
 }
 
 .menuOpen .menuContainer {
-    left: 0;
+  left: 0;
 }
 
 .layoutSpinner {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 64px;
 }
