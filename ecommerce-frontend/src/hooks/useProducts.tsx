@@ -23,7 +23,7 @@ const useProducts: useProductsHook = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState<Category>('');
+  const [category, setCategory] = useState<Category>(Category.ALL);
   const [page, setPage] = useState(1);
 
   const onNext = useCallback(() => setPage(page + 1), [page]);
