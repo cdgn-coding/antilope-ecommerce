@@ -1,0 +1,26 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.innerContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.productList {
+    display: flex;
+    flex-flow: row wrap;
+    max-width: 1024px;
+    justify-content: space-between;
+}
+
+.product {
+    margin: 16px;
+}
+
+.productList::after {
+    content: "";
+    flex: auto;
+  }

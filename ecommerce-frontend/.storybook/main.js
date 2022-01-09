@@ -6,6 +6,7 @@ module.exports = {
     "../src/stories/**/*.stories.mdx",
     "../src/stories/**/*.stories.@(js|jsx|ts|tsx)",
     "../src/components/**/*.stories.@(js|jsx|ts|tsx)",
+    "../src/pages/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   "addons": [
     "@storybook/addon-links",
@@ -19,6 +20,9 @@ module.exports = {
     config.resolve.alias = {
       ...config.resolve.alias,
       '@components': path.resolve(__dirname, "../src/components"),
+      '@models': path.resolve(__dirname, "../src/models"),
+      '@hooks': path.resolve(__dirname, "../src/hooks"),
+      '@pages': path.resolve(__dirname, "../src/pages"),
     };
 
     return config;

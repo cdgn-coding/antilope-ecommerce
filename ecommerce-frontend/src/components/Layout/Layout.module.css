@@ -28,3 +28,10 @@
 .menuOpen .menuContainer {
     left: 0;
 }
+
+.layoutSpinner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 64px;
+}

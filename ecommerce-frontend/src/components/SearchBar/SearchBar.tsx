@@ -10,10 +10,14 @@ export interface SearchBarProps {
 
 const SearchBar = ({ onSearch = () => {}, placeholder, className }: SearchBarProps) => {
     const [isFocused, setIsFocused] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState('');
     const inputPlaceholder = isFocused ? '' : placeholder;
-    const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onSearch(event.target.value);
-    };
+    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value);
+    const onKeyDown = React.useCallback((event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            onSearch(searchTerm);
+        }
+    }, [searchTerm]);
 
     return (
         <div className={`${styles.container} ${className}`}>
@@ -23,7 +27,8 @@ const SearchBar = ({ onSearch = () => {}, placeholder, className }: SearchBarPro
                     className={styles.input}
                     type="text"
                     placeholder={inputPlaceholder}
-                    onChange={onChangeInput}
+                    onKeyDown={onKeyDown}
+                    onChange={onChange}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                 />

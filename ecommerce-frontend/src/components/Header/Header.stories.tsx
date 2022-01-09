@@ -11,6 +11,6 @@ export default {
   }
 };
 
-export const HeaderStory = (args: HeaderProps) => {
+export const Default = (args: HeaderProps) => {
   return <Header {...args} />;
 }

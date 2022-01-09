@@ -22,4 +22,4 @@ export default {
   }
 };
 
-export const ProductCardStory = (args: ProductCardProps) => (<ProductCard {...args} />);
+export const Default = (args: ProductCardProps) => (<ProductCard {...args} />);

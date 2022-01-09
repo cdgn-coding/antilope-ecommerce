@@ -5,6 +5,14 @@ export default {
   component: Layout,
 };
 
-export const LayoutStory = (args: LayoutProps) => {
+export const Default = (args: LayoutProps) => {
   return <Layout {...args} />;
+}
+
+export const WithSecondaryMenu = (args: LayoutProps) => {
+  return <Layout {...args} withSecondaryMenu />;
+}
+
+export const Loading = (args: LayoutProps) => {
+  return <Layout {...args} loading />;
 }

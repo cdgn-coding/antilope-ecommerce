@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.arrowIcon {
+    height: 24px;
+    width: 24px;
+    color: var(--primary);
+    cursor: pointer;
+}

@@ -15,6 +15,6 @@ export default {
   }
 };
 
-export const LayoutStory = (args: MenuProps) => {
+export const Default = (args: MenuProps) => {
   return <Menu {...args} />;
 }

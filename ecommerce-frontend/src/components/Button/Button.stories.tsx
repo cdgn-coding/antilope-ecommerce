@@ -18,7 +18,7 @@ export default {
   },
 };
 
-export const ButtonStory = (args: ButtonProps) => {
+export const Default = (args: ButtonProps) => {
   const { children = 'Click Me' } = args;
   return <Button {...args}>{children}</Button>;
 }

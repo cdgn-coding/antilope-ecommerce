@@ -1,0 +1,1 @@
+export type Category = 'WHITE' | 'BROWN' | 'GRAY' | 'SMALL_APPS' | null;
