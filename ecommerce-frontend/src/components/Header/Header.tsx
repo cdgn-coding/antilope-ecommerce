@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './Header.module.css';
 import SearchBar from '@components/SearchBar';
-import { MdMenu } from 'react-icons/md';
+import { MdMenu, MdClose } from 'react-icons/md';
 
 export interface HeaderProps {
     searchPlaceholder?: string;
     onSearch?: (searchTerm: string) => void;
     onClickMenuButton?: () => void;
+    isMenuOpen?: boolean;
 }
 
 const Header = (props: HeaderProps) => {
@@ -17,7 +18,8 @@ const Header = (props: HeaderProps) => {
                     className={styles.menuButton}
                     onClick={props.onClickMenuButton}
                 >
-                    <MdMenu className={styles.iconMenu} />
+                    {props.isMenuOpen && <MdClose className={styles.iconMenu} />}
+                    {!props.isMenuOpen && <MdMenu className={styles.iconMenu} />}
                 </button>
                 <span className={styles.logo}>Antílope</span>
                 <SearchBar
