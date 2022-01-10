@@ -3,8 +3,6 @@ const path = require("path");
 module.exports = {
   typescript: { reactDocgen: false },
   stories: [
-    "../src/stories/**/*.stories.mdx",
-    "../src/stories/**/*.stories.@(js|jsx|ts|tsx)",
     "../src/components/**/*.stories.@(js|jsx|ts|tsx)",
     "../src/pages/**/*.stories.@(js|jsx|ts|tsx)",
   ],
