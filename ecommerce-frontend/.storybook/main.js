@@ -18,6 +18,7 @@ module.exports = {
       "@models": path.resolve(__dirname, "../src/models"),
       "@hooks": path.resolve(__dirname, "../src/hooks"),
       "@pages": path.resolve(__dirname, "../src/pages"),
+      "@constants": path.resolve(__dirname, "../src/constants"),
     };
 
     return config;

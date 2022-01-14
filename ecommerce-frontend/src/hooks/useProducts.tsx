@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Product } from "@models/Product";
-import { Category } from "@models/Category";
+import { Category, Categories } from "@models/Category";
 import { PaginatedResponse } from "@models/PaginatedResponse";
 
 type SearchProductsResponse = PaginatedResponse<Product>;
@@ -29,7 +29,7 @@ const useProducts: useProductsHook = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<Category>(Category.ALL);
+  const [category, setCategory] = useState<Category>(Categories.ALL);
   const [page, setPage] = useState(1);
 
   const onNext = useCallback(() => setPage(page + 1), [page]);
@@ -38,7 +38,16 @@ const useProducts: useProductsHook = () => {
     setSearch(search);
     setPage(1);
   }, []);
-  const onSelectCategory = (category: Category) => setCategory(category);
+  const onSelectCategory = (value: string) => {
+    if (value in Categories) {
+      setCategory(value);
+      setPage(1);
+      return;
+    }
+
+    setCategory(Categories.ALL);
+    setPage(1);
+  };
 
   useEffect(() => {
     const fetchProductsEffect = async () => {

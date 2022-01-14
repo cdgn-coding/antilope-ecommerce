@@ -6,22 +6,22 @@ import SecondaryMenuButton from "./SecondaryMenuButton";
 export interface SecondaryMenuItem {
   label: string;
   path: string;
-  category: Category;
+  value: string;
 }
 
 export interface SecondaryMenuProps {
   items: SecondaryMenuItem[];
   withoutLinks?: boolean;
-  onCategoryClick?: (category: Category) => void;
+  onSelectItem?: (value: string) => void;
 }
 
 const SecondaryMenu = ({
   items = [],
   withoutLinks = false,
-  onCategoryClick = () => {},
+  onSelectItem = () => {},
 }: SecondaryMenuProps) => {
   const renderItem = (item: SecondaryMenuItem) => {
-    const onClick = () => onCategoryClick(item.category);
+    const onClick = () => onSelectItem(item.value);
     return (
       <SecondaryMenuButton
         key={item.path}

@@ -6,6 +6,8 @@ import ProductCard from "@components/ProductCard";
 import Link from "@components/Link";
 import Pagination from "@components/Pagination";
 import { Product } from "@models/Product";
+import secondaryMenuItems from "@constants/secondaryMenu";
+import menuItems from "@constants/menuItems";
 
 const renderCard = (product: Product) => (
   <Link key={Math.random()} href={`/products/${product.sku}`}>
@@ -31,8 +33,10 @@ const Explore = () => {
       withSecondaryMenu
       onSearch={onSearch}
       loading={loading}
-      withoutCategoryLinks
-      onSelectCategory={onSelectCategory}
+      withoutSecondaryMenuLinks
+      onSelectSecondaryItem={onSelectCategory}
+      secondaryMenuItems={secondaryMenuItems}
+      menuItems={menuItems}
     >
       <div className={styles.container}>
         <div className={styles.innerContainer}>

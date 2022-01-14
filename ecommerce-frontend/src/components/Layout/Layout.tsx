@@ -1,47 +1,32 @@
 import React from "react";
 import styles from "./Layout.module.css";
 import Header from "@components/Header";
-import Menu from "@components/Menu";
-import SecondaryMenu from "@components/SecondaryMenu";
+import Menu, { MenuItemProps } from "@components/Menu";
+import SecondaryMenu, { SecondaryMenuItem } from "@components/SecondaryMenu";
 import Spinner from "@components/Spinner";
-import { Category } from "@models/Category";
 
 export interface LayoutProps {
   useCategoriesBar?: boolean;
   children: React.ReactNode;
   withSecondaryMenu?: boolean;
-  withoutCategoryLinks?: boolean;
+  withoutSecondaryMenuLinks?: boolean;
   onSearch?: (searchTerm: string) => void;
-  onSelectCategory?: (category: Category) => void;
+  onSelectSecondaryItem?: (value: string) => void;
   loading?: boolean;
+  menuItems: MenuItemProps[];
+  secondaryMenuItems: SecondaryMenuItem[];
 }
-
-const menuItems = [
-  { label: "Inicio", path: "/" },
-  { label: "Mis compras", path: "/purchases" },
-  { label: "Carrito", path: "/cart" },
-];
-
-const secondaryMenuItems = [
-  { label: "Todos", path: "/", category: Category.ALL },
-  { label: "Línea blanca", path: "/?category=WHITE", category: Category.WHITE },
-  { label: "Línea marrón", path: "/?category=BROWN", category: Category.BROWN },
-  { label: "Línea gris", path: "/?category=GRAY", category: Category.GRAY },
-  {
-    label: "Pequeños electrodomésticos",
-    path: "/?category=SMALL_APPS",
-    category: Category.SMALL_APPS,
-  },
-];
 
 const Layout = (props: LayoutProps) => {
   const {
     children,
     withSecondaryMenu,
     loading,
-    withoutCategoryLinks,
-    onSelectCategory = () => {},
+    withoutSecondaryMenuLinks,
+    onSelectSecondaryItem = () => {},
     onSearch,
+    menuItems,
+    secondaryMenuItems,
   } = props;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const onClickMenuButton = React.useCallback(
@@ -65,8 +50,8 @@ const Layout = (props: LayoutProps) => {
         {withSecondaryMenu && (
           <SecondaryMenu
             items={secondaryMenuItems}
-            withoutLinks={withoutCategoryLinks}
-            onCategoryClick={onSelectCategory}
+            withoutLinks={withoutSecondaryMenuLinks}
+            onSelectItem={onSelectSecondaryItem}
           />
         )}
         {!loading && children}
