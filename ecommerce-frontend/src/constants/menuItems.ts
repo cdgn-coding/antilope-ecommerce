@@ -1,9 +1,9 @@
-import { MenuItem } from '@components/Menu'
+import { MenuItem } from "@components/Menu";
 
 const menuItems: MenuItem[] = [
-    { label: "Inicio", path: "/" },
-    { label: "Mis compras", path: "/purchases" },
-    { label: "Carrito", path: "/cart" },
-  ];
+  { label: "Inicio", path: "/" },
+  { label: "Mis compras", path: "/purchases" },
+  { label: "Carrito", path: "/cart" },
+];
 
 export default menuItems;

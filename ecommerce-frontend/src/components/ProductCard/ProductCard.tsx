@@ -10,7 +10,12 @@ const ProductCard = (props: ProductCardProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
-        <Image alt={props.name} src={firstImage} className={styles.image} layout="fill" />
+        <Image
+          alt={props.name}
+          src={firstImage}
+          className={styles.image}
+          layout="fill"
+        />
       </div>
       <div className={styles.infoContainer}>
         <div className={styles.name}>{props.name}</div>
