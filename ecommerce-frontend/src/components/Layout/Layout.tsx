@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Layout.module.css";
 import Header from "@components/Header";
-import Menu, { MenuItemProps } from "@components/Menu";
+import Menu, { MenuItem } from "@components/Menu";
 import SecondaryMenu, { SecondaryMenuItem } from "@components/SecondaryMenu";
 import Spinner from "@components/Spinner";
 
@@ -13,7 +13,7 @@ export interface LayoutProps {
   onSearch?: (searchTerm: string) => void;
   onSelectSecondaryItem?: (value: string) => void;
   loading?: boolean;
-  menuItems: MenuItemProps[];
+  menuItems: MenuItem[];
   secondaryMenuItems: SecondaryMenuItem[];
 }
 

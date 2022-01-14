@@ -2,16 +2,16 @@ import React from "react";
 import styles from "./Menu.module.css";
 import Link from "@components/Link";
 
-export interface MenuItemProps {
+export interface MenuItem {
   label: string;
   path: string;
 }
 
 export interface MenuProps {
-  items: MenuItemProps[];
+  items: MenuItem[];
 }
 
-const MenuItem = ({ label, path }: MenuItemProps) => {
+const MenuItem = ({ label, path }: MenuItem) => {
   return (
     <div className={styles.menuItem}>
       <Link href={path}>{label}</Link>
@@ -20,7 +20,7 @@ const MenuItem = ({ label, path }: MenuItemProps) => {
 };
 
 const Menu = ({ items }: MenuProps) => {
-  const renderMenuItem = (item: MenuItemProps) => (
+  const renderMenuItem = (item: MenuItem) => (
     <li key={item.path}>
       <MenuItem {...item} />
     </li>

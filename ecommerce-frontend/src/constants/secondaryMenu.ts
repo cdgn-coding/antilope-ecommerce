@@ -1,6 +1,7 @@
 import { Categories } from "@models/Category";
+import { SecondaryMenuItem } from '@components/SecondaryMenu';
 
-const secondaryMenuItems = [
+const secondaryMenuItems: SecondaryMenuItem[] = [
     { label: "Todos", path: "/", value: Categories.ALL },
     { label: "Línea blanca", path: "/?category=WHITE", value: Categories.WHITE },
     { label: "Línea marrón", path: "/?category=BROWN", value: Categories.BROWN },
