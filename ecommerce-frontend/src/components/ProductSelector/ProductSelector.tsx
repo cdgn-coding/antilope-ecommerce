@@ -1,10 +1,14 @@
+import React from "react";
 import styles from "./ProductSelector.module.css";
-import { Product } from "@models/Product";
 import Image from "@components/Image";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 
 export interface ProductSelectorProps {
-  product: Product;
+  product: {
+    name: string;
+    price: number;
+    images: string[];
+  };
   quantity: number;
   onChangeQuantity: (quantity: number) => void;
   onRemove: () => void;
@@ -33,6 +37,7 @@ const ProductSelector = ({
         <div className={styles.quantitySelector}>
           <div
             className={styles.quantityButton}
+            data-testid="quantity-minus"
             onClick={() => onChangeQuantity(quantity - 1)}
           >
             -
@@ -40,6 +45,7 @@ const ProductSelector = ({
           <div className={styles.quantity}>{quantity}</div>
           <div
             className={styles.quantityButton}
+            data-testid="quantity-plus"
             onClick={() => onChangeQuantity(quantity + 1)}
           >
             +
@@ -47,7 +53,11 @@ const ProductSelector = ({
         </div>
       </div>
       <div className={styles.removeButtonContainer}>
-        <span className={styles.removeButton} onClick={onRemove}>
+        <span
+          className={styles.removeButton}
+          onClick={onRemove}
+          data-testid="remove-button"
+        >
           <MdOutlineDeleteOutline onClick={onRemove} />
         </span>
       </div>
