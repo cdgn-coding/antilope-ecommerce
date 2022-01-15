@@ -4,8 +4,6 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -26,5 +24,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         cache-dependency-path: './ecommerce-frontend/yarn.lock'
+    - run: yarn install
+      working-directory: ecommerce-frontend
     - run: yarn test
       working-directory: ecommerce-frontend
