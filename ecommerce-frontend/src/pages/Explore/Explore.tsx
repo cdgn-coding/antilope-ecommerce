@@ -28,7 +28,7 @@ const Explore = () => {
     onPrevious,
     onSelectCategory,
   } = useProducts();
-  console.log(page, totalPages);
+
   return (
     <Layout
       withSecondaryMenu
