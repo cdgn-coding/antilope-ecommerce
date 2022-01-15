@@ -10,14 +10,13 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  test:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [16.x]
 
     steps:
     - uses: actions/checkout@v2
@@ -25,7 +24,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: cd ecommerce-frontend && yarn install
+        cache: 'yarn'
+        cache-dependency-path: './ecommerce-frontend/yarn.lock'
     - run: yarn test
-    - run: yarn lint
+      working-directory: ./ecommerce-frontend
