@@ -26,5 +26,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
         cache-dependency-path: './ecommerce-frontend/yarn.lock'
+    - name: Test frontend
     - run: yarn test
-      working-directory: ./ecommerce-frontend
+      working-directory: ecommerce-frontend
