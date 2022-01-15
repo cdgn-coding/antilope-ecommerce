@@ -6,7 +6,7 @@ import menuItems from "@constants/menuItems";
 import useCart from "@hooks/useCart";
 
 const Cart = () => {
-  const { loading, items } = useCart();
+  const { loading, data } = useCart();
   return (
     <Layout
       menuItems={menuItems}
