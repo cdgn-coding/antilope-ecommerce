@@ -11,9 +11,11 @@ const fetchProducts = async (
   page: number,
   category: Category
 ): Promise<SearchProductsResponse> => {
-  return await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?search=${search}&page=${page}&category=${category}`
-  ).then((res) => res.json());
+  const queryParams = `search=${search}&page=${page}&category=${category}`;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?${queryParams}`
+  );
+  return await response.json();
 };
 
 type useProductsHook = () => {
