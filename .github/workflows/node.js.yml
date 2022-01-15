@@ -26,6 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: cd cd ecommerce-frontend && yarn install
+    - run: cd ecommerce-frontend && yarn install
     - run: yarn test
     - run: yarn lint
