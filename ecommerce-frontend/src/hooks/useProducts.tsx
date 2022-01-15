@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import fetch from 'cross-fetch';
 import { Product } from "@models/Product";
 import { Category, Categories } from "@models/Category";
 import { PaginatedResponse } from "@models/PaginatedResponse";
@@ -11,7 +12,7 @@ const fetchProducts = async (
   category: Category
 ): Promise<SearchProductsResponse> => {
   return await fetch(
-    `/api/products?search=${search}&page=${page}&category=${category}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/products?search=${search}&page=${page}&category=${category}`
   ).then((res) => res.json());
 };
 
@@ -26,7 +27,7 @@ type useProductsHook = () => {
 
 const useProducts: useProductsHook = () => {
   const [data, setData] = useState<SearchProductsResponse>({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<Category>(Categories.ALL);
@@ -50,8 +51,8 @@ const useProducts: useProductsHook = () => {
   };
 
   useEffect(() => {
+    console.log("useEffect");
     const fetchProductsEffect = async () => {
-      setLoading(true);
       try {
         const data = await fetchProducts(search, page, category);
         setData(data);
