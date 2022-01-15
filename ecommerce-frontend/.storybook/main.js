@@ -1,4 +1,5 @@
 const path = require("path");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   typescript: { reactDocgen: false },
@@ -20,6 +21,8 @@ module.exports = {
       "@pages": path.resolve(__dirname, "../src/pages"),
       "@constants": path.resolve(__dirname, "../src/constants"),
     };
+
+    config.plugins.push(new Dotenv(path.resolve("..", ".env.local")));
 
     return config;
   },

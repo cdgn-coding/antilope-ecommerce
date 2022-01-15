@@ -11,7 +11,7 @@ import menuItems from "@constants/menuItems";
 
 const renderCard = (product: Product) => (
   <Link key={Math.random()} href={`/products/${product.sku}`}>
-    <div className={styles.product}>
+    <div className={styles.product} data-testid={`product-card-${product.sku}`}>
       <ProductCard {...product} />
     </div>
   </Link>

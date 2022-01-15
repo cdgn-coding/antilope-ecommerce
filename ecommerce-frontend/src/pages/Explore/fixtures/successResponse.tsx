@@ -36,11 +36,9 @@ const uniqueProducts = [
 
 const successResponse: PaginatedResponse<Product> = {
   page: 1,
-  totalPages: 2,
-  totalItems: 30,
-  data: new Array(5)
-    .fill(0)
-    .reduce((acc, curr) => acc.concat(uniqueProducts), []),
+  totalPages: 1,
+  totalItems: 3,
+  data: uniqueProducts,
 };
 
 export default successResponse;
