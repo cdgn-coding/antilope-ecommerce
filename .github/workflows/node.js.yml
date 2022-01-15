@@ -18,6 +18,8 @@ jobs:
       matrix:
         node-version: [16.x]
 
+    name: Frontend Tests
+
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
