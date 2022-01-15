@@ -51,7 +51,6 @@ const useProducts: useProductsHook = () => {
   };
 
   useEffect(() => {
-    console.log("useEffect");
     const fetchProductsEffect = async () => {
       try {
         const data = await fetchProducts(search, page, category);

@@ -10,7 +10,6 @@ describe("Given Explore Page", () => {
     const server = setupServer(
       // Describe the requests to mock.
       rest.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products`, (req, res, ctx) => {
-        console.log(req.url)
         return res(ctx.json(successResponse));
       })
     );

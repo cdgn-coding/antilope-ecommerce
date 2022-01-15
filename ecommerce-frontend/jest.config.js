@@ -15,5 +15,11 @@ module.exports = {
     },
   },
   testEnvironment: "jsdom",
-  setupFiles: ["<rootDir>/jest.setup.js"]
+  setupFiles: ["<rootDir>/jest.setup.js"],
+  collectCoverageFrom: [
+    "src/**/*.{ts,tsx}",
+    "!src/**/*.stories.{ts,tsx}",
+    "!**/node_modules/**",
+    "!**/vendor/**"
+  ]
 };
