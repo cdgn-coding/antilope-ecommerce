@@ -13,9 +13,7 @@ export const WithProducts = Template.bind({});
 WithProducts.parameters = {
   msw: [
     rest.get("/api/products*", (req, res, ctx) => {
-      const page = req.url.searchParams.getAll("page");
-      const response = { ...successResponse, page };
-      return res(ctx.delay(500), ctx.json(response));
+      return res(ctx.delay(500), ctx.json(successResponse));
     }),
   ],
 };
