@@ -4,8 +4,6 @@
 name: Node.js CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -30,3 +28,11 @@ jobs:
       working-directory: ecommerce-frontend
     - run: yarn test
       working-directory: ecommerce-frontend
+
+
+      - name: Comment with Test Coverage
+        uses: dkershner6/jest-coverage-commenter-action@v1
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          test_command: "yarn run test:coverage"
+          reporter: "text-summary"
