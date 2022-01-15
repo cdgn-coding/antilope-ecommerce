@@ -28,6 +28,7 @@ const Explore = () => {
     onPrevious,
     onSelectCategory,
   } = useProducts();
+
   return (
     <Layout
       withSecondaryMenu

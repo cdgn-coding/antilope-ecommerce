@@ -18,16 +18,17 @@ const Pagination = ({
   const isFirstPage = page === 1;
   const isLastPage = page === totalPages;
   const text = `Página ${page} de ${totalPages}`;
+
   return (
     <div className={styles.container}>
       {!isFirstPage && (
-        <span onClick={onPrevious}>
+        <span onClick={onPrevious} data-testid="previous-page-button">
           <MdKeyboardArrowLeft className={styles.arrowIcon} />
         </span>
       )}
       <span className={styles.text}>{text}</span>
       {!isLastPage && (
-        <span onClick={onNext}>
+        <span onClick={onNext} data-testid="next-page-button">
           <MdKeyboardArrowRight className={styles.arrowIcon} />
         </span>
       )}
