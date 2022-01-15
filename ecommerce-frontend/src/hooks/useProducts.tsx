@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import fetch from 'cross-fetch';
+import fetch from "cross-fetch";
 import { Product } from "@models/Product";
 import { Category, Categories } from "@models/Category";
 import { PaginatedResponse } from "@models/PaginatedResponse";

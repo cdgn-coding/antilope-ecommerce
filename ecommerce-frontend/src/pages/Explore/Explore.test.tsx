@@ -9,13 +9,16 @@ describe("Given Explore Page", () => {
   describe("When the API has products", () => {
     const server = setupServer(
       // Describe the requests to mock.
-      rest.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/products`, (req, res, ctx) => {
-        return res(ctx.json(successResponse));
-      })
+      rest.get(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`,
+        (req, res, ctx) => {
+          return res(ctx.json(successResponse));
+        }
+      )
     );
 
     beforeAll(() => {
-      server.listen({ onUnhandledRequest: 'warn' });
+      server.listen({ onUnhandledRequest: "warn" });
     });
 
     afterAll(() => {
@@ -24,11 +27,11 @@ describe("Given Explore Page", () => {
 
     it("Then should render cards for every product", async () => {
       act(() => {
-        render(<Explore />)
+        render(<Explore />);
       });
 
       await waitFor(() => {
-        const productSku = 'ABSOLUTE-BEATS-SOLO3-WIRELESS';
+        const productSku = "ABSOLUTE-BEATS-SOLO3-WIRELESS";
         expect(screen.getByTestId(`product-card-${productSku}`)).toBeTruthy();
       });
     });

@@ -6,7 +6,8 @@ module.exports = {
   testEnvironment: "node",
   moduleNameMapper: {
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$": "identity-obj-proxy",
+    ".+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$":
+      "identity-obj-proxy",
     ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: "<rootDir>/" }),
   },
   globals: {
@@ -20,6 +21,7 @@ module.exports = {
     "src/**/*.{ts,tsx}",
     "!src/**/*.stories.{ts,tsx}",
     "!**/node_modules/**",
-    "!**/vendor/**"
-  ]
+    "!**/vendor/**",
+  ],
+  coverageReporters: ["json", "html", "text", "text-summary"],
 };
