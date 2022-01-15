@@ -27,4 +27,3 @@ jobs:
         cache: 'yarn'
         cache-dependency-path: './ecommerce-frontend/yarn.lock'
     - run: yarn test
-      working-directory: ecommerce-frontend
