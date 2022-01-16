@@ -10,15 +10,15 @@ export interface ProductSelectorProps {
     images: string[];
   };
   quantity: number;
-  onChangeQuantity: (quantity: number) => void;
-  onRemove: () => void;
+  onChangeQuantity?: (quantity: number) => void;
+  onRemove?: () => void;
 }
 
 const ProductSelector = ({
   product,
   quantity,
-  onChangeQuantity,
-  onRemove,
+  onChangeQuantity = () => {},
+  onRemove = () => {},
 }: ProductSelectorProps) => {
   const productImage = product.images[0];
   return (

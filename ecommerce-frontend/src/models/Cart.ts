@@ -7,5 +7,8 @@ export interface CartItem {
 
 export interface Cart {
   id: string;
+  subtotal: number;
+  shipment: number;
+  total: number;
   items: CartItem[];
 }

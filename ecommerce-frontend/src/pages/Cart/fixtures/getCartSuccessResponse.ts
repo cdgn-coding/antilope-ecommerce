@@ -5,6 +5,9 @@ import headsetRose from "./headsetRose.jpg";
 const cartSuccessResponse: Response<Cart> = {
   data: {
     id: "1",
+    subtotal: 5000,
+    shipment: 250,
+    total: 5250,
     items: [
       {
         product: {
