@@ -3,7 +3,7 @@ import React from "react";
 import { render, act, waitFor, screen } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import successResponse from "./fixtures/successResponse";
+import getProductsSuccessResponse from "./fixtures/getProductsSuccessResponse";
 
 describe("Given Explore Page", () => {
   describe("When the API has products", () => {
@@ -12,7 +12,7 @@ describe("Given Explore Page", () => {
       rest.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`,
         (req, res, ctx) => {
-          return res(ctx.json(successResponse));
+          return res(ctx.json(getProductsSuccessResponse));
         }
       )
     );
