@@ -9,16 +9,24 @@ import { CartItem } from "@models/Cart";
 import CartSummary from "@components/CartSummary";
 import useRouter from "@hooks/useRouter";
 
-const renderCartItems = ({ product, quantity }: CartItem) => (
-  <div className={styles.cartItem} key={product.sku}>
-    <ProductSelector product={product} quantity={quantity} />
-  </div>
-);
-
 const Cart = () => {
-  const { loading, data } = useCart();
+  const { loading, data, changesLoading, onChangeQuantity, onRemoveProduct } =
+    useCart();
   const { push } = useRouter();
   const onSearch = (query: string) => push(`/?search=${query}`);
+
+  const renderCartItems = ({ product, quantity }: CartItem) => (
+    <div className={styles.cartItem} key={product.sku}>
+      <ProductSelector
+        product={product}
+        quantity={quantity}
+        onChangeQuantity={(quantity) => onChangeQuantity(product.sku, quantity)}
+        onRemove={() => onRemoveProduct(product.sku)}
+        loading={changesLoading}
+      />
+    </div>
+  );
+
   return (
     <Layout
       menuItems={menuItems}

@@ -12,7 +12,7 @@ const Template: ComponentStory<typeof Cart> = () => <Cart />;
 export const WithProducts = Template.bind({});
 WithProducts.parameters = {
   msw: [
-    rest.get("/api/cart*", (req, res, ctx) => {
+    rest.all("/api/cart*", (req, res, ctx) => {
       return res(ctx.delay(500), ctx.json(getCartSuccessResponse));
     }),
   ],

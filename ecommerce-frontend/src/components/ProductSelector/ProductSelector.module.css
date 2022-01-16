@@ -64,3 +64,8 @@
 .removeButton svg {
   font-size: 1.25rem;
 }
+
+.loading .removeButton svg,
+.loading .quantityButton {
+  color: #cccccc;
+}

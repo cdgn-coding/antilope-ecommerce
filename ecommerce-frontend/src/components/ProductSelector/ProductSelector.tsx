@@ -12,6 +12,7 @@ export interface ProductSelectorProps {
   quantity: number;
   onChangeQuantity?: (quantity: number) => void;
   onRemove?: () => void;
+  loading?: boolean;
 }
 
 const ProductSelector = ({
@@ -19,10 +20,12 @@ const ProductSelector = ({
   quantity,
   onChangeQuantity = () => {},
   onRemove = () => {},
+  loading = false,
 }: ProductSelectorProps) => {
   const productImage = product.images[0];
+  const loadingClassName = loading ? styles.loading : "";
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${loadingClassName}`}>
       <div className={styles.imageContainer}>
         <Image
           src={productImage}
@@ -58,7 +61,7 @@ const ProductSelector = ({
           onClick={onRemove}
           data-testid="remove-button"
         >
-          <MdOutlineDeleteOutline onClick={onRemove} />
+          <MdOutlineDeleteOutline />
         </span>
       </div>
     </div>
