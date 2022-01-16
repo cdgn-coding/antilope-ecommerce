@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  width: 400px;
+  height: 80px;
+  flex-direction: row;
+}
+
+.imageContainer {
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  position: relative;
+}
+
+.price {
+  font-weight: 500;
+}
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-left: 16px;
+}
+
+.quantitySelector {
+  display: flex;
+  flex-direction: row;
+  line-height: 16px;
+  align-items: center;
+}
+
+.quantity {
+  margin: 0px 8px;
+}
+
+.quantityButton {
+  border: 1px solid #ccc;
+  display: inline-block;
+  border-radius: 10px;
+  color: black;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.removeButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.removeButton {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.removeButton svg {
+  font-size: 1.25rem;
+}
+
+.loading .removeButton svg,
+.loading .quantityButton {
+  color: #cccccc;
+}
