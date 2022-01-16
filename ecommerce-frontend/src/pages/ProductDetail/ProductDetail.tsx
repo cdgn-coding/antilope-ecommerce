@@ -6,6 +6,7 @@ import secondaryMenuItems from "@constants/secondaryMenu";
 import menuItems from "@constants/menuItems";
 import styles from "./ProductDetail.module.css";
 import ImageSelector from "@components/ImageSelector";
+import ProductSummary from "@components/ProductSummary";
 
 export interface ProductDetailProps {
   sku: string;
@@ -25,7 +26,12 @@ const ProductDetail = ({ sku }: ProductDetailProps) => {
     >
       <div className={styles.container}>
         <div className={styles.productDetail}>
-          {data && <ImageSelector images={data?.images} />}
+          <div className={styles.imageSelector}>
+            {data && <ImageSelector {...data} />}
+          </div>
+          <div className={styles.productSummary}>
+            {data && <ProductSummary {...data} />}
+          </div>
         </div>
         <div className={styles.relatedProducts}></div>
       </div>
