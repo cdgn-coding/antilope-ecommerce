@@ -6,7 +6,7 @@ export default {
   component: ProductDetail,
   argTypes: {
     sku: {
-      control: "text",
+      control: { type: "text" },
       defaultValue: "AURICULARES-HEADLESS-SOLOQ3",
     },
   },

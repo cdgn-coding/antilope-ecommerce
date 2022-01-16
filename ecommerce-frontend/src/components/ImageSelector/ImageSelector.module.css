@@ -1,0 +1,38 @@
+.container {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.selectedImageContainer {
+  height: 400px;
+  width: 400px;
+  display: inline-block;
+}
+
+.imagePool {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.selectedImage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  border: 1px solid #ccc;
+}
+
+.selectedImage img,
+.selectableImage img {
+  object-fit: cover;
+}
+
+.selectableImage {
+  height: 80px;
+  width: 80px;
+  position: relative;
+  padding: 8px;
+  border: 1px solid #ccc;
+}
