@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+.container > div {
+  margin: 4px 0;
+}
+
+.name {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.price {
+  font-size: 1.25rem;
+}
+
+.description {
+  line-height: 1.25rem;
+}
+
+.descriptionLabel {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
