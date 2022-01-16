@@ -35,4 +35,5 @@
   position: relative;
   padding: 8px;
   border: 1px solid #ccc;
+  cursor: pointer;
 }

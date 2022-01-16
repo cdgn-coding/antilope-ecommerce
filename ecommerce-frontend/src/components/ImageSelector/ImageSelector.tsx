@@ -11,8 +11,9 @@ const ImageSelector = ({ images }: ImageSelectorProps) => {
   const [selectedImage, setSelectedImage] = useState(initialImage);
 
   const renderSelectableImage = (image: string) => {
+    const onClick = () => setSelectedImage(image);
     return (
-      <div className={styles.selectableImage}>
+      <div className={styles.selectableImage} onClick={onClick}>
         <Image src={image} layout="fill" />
       </div>
     );
