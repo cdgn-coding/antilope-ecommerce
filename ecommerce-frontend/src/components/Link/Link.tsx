@@ -7,7 +7,7 @@ export interface LinkProps {
 }
 
 const Link = ({ children, href }: LinkProps) => {
-  if (process?.env?.STORYBOOK) {
+  if (process?.env?.STORYBOOK || process?.env?.NODE_ENV === "test") {
     return <a href={String(href)}>{children}</a>;
   }
 

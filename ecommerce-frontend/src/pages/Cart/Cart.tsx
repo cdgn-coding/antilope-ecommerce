@@ -16,7 +16,11 @@ const Cart = () => {
   const onSearch = (query: string) => push(`/?search=${query}`);
 
   const renderCartItems = ({ product, quantity }: CartItem) => (
-    <div className={styles.cartItem} key={product.sku}>
+    <div
+      className={styles.cartItem}
+      key={product.sku}
+      data-testid={`product-card-${product.sku}`}
+    >
       <ProductSelector
         product={product}
         quantity={quantity}
@@ -43,11 +47,13 @@ const Cart = () => {
         </div>
         <div className={styles.column}>
           <div className={styles.innerContent}>
-            <CartSummary
-              total={data?.total}
-              subtotal={data?.subtotal}
-              shipment={data?.shipment}
-            />
+            <div className={styles.cartSummary} data-testid="cart-summary">
+              <CartSummary
+                total={data?.total}
+                subtotal={data?.subtotal}
+                shipment={data?.shipment}
+              />
+            </div>
           </div>
         </div>
       </div>
