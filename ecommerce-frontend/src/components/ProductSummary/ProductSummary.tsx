@@ -7,6 +7,8 @@ export interface ProductSummaryProps {
   stock: number;
   price: number;
   description: string;
+  onBuy?: () => void;
+  onAddToCart?: () => void;
 }
 
 const ProductSummary = ({
@@ -14,6 +16,8 @@ const ProductSummary = ({
   stock,
   price,
   description,
+  onBuy = () => {},
+  onAddToCart = () => {},
 }: ProductSummaryProps) => {
   return (
     <div className={styles.container}>
@@ -23,8 +27,8 @@ const ProductSummary = ({
         Stock disponible <span className={styles.stockNumber}>{stock}</span>
       </div>
       <div className={styles.actions}>
-        <Button>Comprar</Button>
-        <Button>Agregar al carrito</Button>
+        <Button onClick={onBuy}>Comprar</Button>
+        <Button onClick={onAddToCart}>Agregar al carrito</Button>
       </div>
       <div className={styles.description}>
         <div className={styles.descriptionLabel}>Sobre este producto</div>
