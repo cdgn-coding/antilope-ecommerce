@@ -4,6 +4,7 @@ import useProduct from "@hooks/useProduct";
 import useRouter from "@hooks/useRouter";
 import secondaryMenuItems from "@constants/secondaryMenu";
 import menuItems from "@constants/menuItems";
+import styles from "./ProductDetail.module.css";
 
 export interface ProductDetailProps {
   sku: string;
@@ -20,7 +21,12 @@ const ProductDetail = ({ sku }: ProductDetailProps) => {
       secondaryMenuItems={secondaryMenuItems}
       onSearch={onSearch}
       loading={loading}
-    ></Layout>
+    >
+      <div className={styles.container}>
+        <div className={styles.productDetail}></div>
+        <div className={styles.relatedProducts}></div>
+      </div>
+    </Layout>
   );
 };
 
