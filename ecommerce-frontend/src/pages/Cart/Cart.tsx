@@ -7,6 +7,7 @@ import useCart from "@hooks/useCart";
 import ProductSelector from "@components/ProductSelector";
 import { CartItem } from "@models/Cart";
 import CartSummary from "@components/CartSummary";
+import useRouter from "@hooks/useRouter";
 
 const renderCartItems = ({ product, quantity }: CartItem) => (
   <div className={styles.cartItem} key={product.sku}>
@@ -16,11 +17,14 @@ const renderCartItems = ({ product, quantity }: CartItem) => (
 
 const Cart = () => {
   const { loading, data } = useCart();
+  const { push } = useRouter();
+  const onSearch = (query: string) => push(`/?search=${query}`);
   return (
     <Layout
       menuItems={menuItems}
       withSecondaryMenu
       secondaryMenuItems={secondaryMenuItems}
+      onSearch={onSearch}
       loading={loading}
     >
       <div className={styles.container}>
