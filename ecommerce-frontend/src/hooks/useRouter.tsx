@@ -1,7 +1,7 @@
 import { useRouter as useRouterNext } from "next/router";
 
 const useRouter = () => {
-  if (process?.env?.STORYBOOK) {
+  if (process?.env?.STORYBOOK || process?.env?.NODE_ENV === "test") {
     return {
       push: () => {},
       pathname: "/",

@@ -8,7 +8,6 @@ import getProductsSuccessResponse from "./fixtures/getProductsSuccessResponse";
 describe("Given Explore Page", () => {
   describe("When the API has products", () => {
     const server = setupServer(
-      // Describe the requests to mock.
       rest.get(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/products`,
         (req, res, ctx) => {
