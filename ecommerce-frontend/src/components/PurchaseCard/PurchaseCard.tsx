@@ -42,6 +42,7 @@ const PurchaseCard = ({
   );
 
   const hasInvoice = status === PurchaseStatus.DOCUMENTED && invoiceUrl;
+
   return (
     <div className={styles.container}>
       <div className={styles.imageContainer}>
@@ -55,8 +56,8 @@ const PurchaseCard = ({
         <div className={styles.purchaseDate}>{formattedDate}</div>
         <div className={styles.purchaseAction}>
           {hasInvoice && (
-            <Link href={invoiceUrl}>
-              <Button>Ver factura</Button>
+            <Link href={invoiceUrl} target="_blank">
+              <Button type="primary">Ver factura</Button>
             </Link>
           )}
           {!hasInvoice && (

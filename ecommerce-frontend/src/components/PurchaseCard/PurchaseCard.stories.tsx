@@ -42,5 +42,9 @@ export default {
 };
 
 export const WithoutInvoice = (args: PurchaseCardProps) => (
-  <PurchaseCard {...args} />
+  <PurchaseCard
+    {...args}
+    status={PurchaseStatus.DOCUMENTED}
+    invoiceUrl={"http://www.google.com"}
+  />
 );
