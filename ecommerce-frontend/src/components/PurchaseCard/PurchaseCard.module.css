@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.imageContainer {
+  width: 128px;
+  height: 128px;
+  position: relative;
+  margin-right: 32px;
+}
+
+.imageContainer img {
+  object-fit: cover;
+}
+
+.productName {
+  font-weight: 500;
+}
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}

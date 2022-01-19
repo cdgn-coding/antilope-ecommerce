@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Button.module.css";
 
 export interface ButtonProps {
-  type?: "primary" | "secondary";
+  type?: "primary" | "secondary" | "disabled";
   children?: React.ReactNode;
   onClick?: () => void;
   size?: "small" | "medium" | "large";
