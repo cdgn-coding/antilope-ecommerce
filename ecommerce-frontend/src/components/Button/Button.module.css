@@ -17,6 +17,11 @@
   color: #3b3b3b;
 }
 
+.disabled {
+  background: #bababa;
+  color: #fff;
+}
+
 .small {
   font-size: 0.75rem;
 }
