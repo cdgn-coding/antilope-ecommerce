@@ -1,11 +1,16 @@
 package products
 
+import (
+	"time"
+)
+
 type Product struct {
-	name        string
-	price       int64
-	description string
-	sku         string
-	stock       int64
-	images      []string
-	createdAt   string
+	ID          string `dynamo:",hash"`
+	Name        string
+	Price       int64
+	Description string
+	Sku         string
+	Stock       int64
+	Images      []string
+	CreatedAt   time.Time
 }
