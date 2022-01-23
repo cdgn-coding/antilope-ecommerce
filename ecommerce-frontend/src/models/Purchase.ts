@@ -5,12 +5,12 @@ export interface Purchase {
   id: string;
   amount: number;
   status: PurchaseStatus;
-  products: ProductPurchase[];
-  createdAt: Date;
-  invoiceUrl: string;
+  packs: Pack[];
+  createdAt: string;
+  invoiceUrl?: string;
 }
 
-export interface ProductPurchase {
+export interface Pack {
   amount: number;
   quantity: number;
   product: Product;
