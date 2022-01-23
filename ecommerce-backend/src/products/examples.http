@@ -1,7 +1,10 @@
 ### Create Product
-
 PUT http://localhost:3000/products/123
 content-type: application/json
 
 {
+    "Sku": "456"
 }
+
+### Get Product
+GET http://localhost:3000/products/456

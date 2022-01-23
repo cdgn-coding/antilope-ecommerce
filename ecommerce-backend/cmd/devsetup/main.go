@@ -12,6 +12,7 @@ import (
 func main() {
 	godotenv.Load()
 	log.SetOutput(os.Stdout)
+
 	log.Print("Creating DynamoDB tables")
 	dynamodb := clients.GetDynamoDBClient()
 	err := dynamodb.CreateTable("products", products.Product{}).Run()
