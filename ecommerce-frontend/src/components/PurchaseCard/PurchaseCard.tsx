@@ -12,7 +12,7 @@ export interface PurchaseCardProps {
   product: Product;
   amount: number;
   status: PurchaseStatus;
-  createdAt: Date;
+  createdAt: string;
   invoiceUrl?: string;
 }
 
@@ -27,6 +27,14 @@ const statusNameMap: StatusStringMap = {
   CANCELLED: "Compra cancelada",
 };
 
+const formatDate = (date: string) => {
+  const jsDate = new Date(date);
+  return DateTime.fromJSDate(jsDate).toLocaleString(
+    { ...DateTime.DATE_FULL },
+    { locale: "es" }
+  );
+};
+
 const PurchaseCard = ({
   product,
   quantity,
@@ -36,10 +44,7 @@ const PurchaseCard = ({
   invoiceUrl,
 }: PurchaseCardProps) => {
   const image = product.images[0];
-  const formattedDate = DateTime.fromJSDate(createdAt).toLocaleString(
-    { ...DateTime.DATE_FULL },
-    { locale: "es" }
-  );
+  const formattedDate = formatDate(createdAt);
 
   const hasInvoice = status === PurchaseStatus.DOCUMENTED && invoiceUrl;
 
