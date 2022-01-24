@@ -12,13 +12,16 @@ func (u usecases) CreateOrUpdateProduct(product *Product) error {
 		return errors.New("Sku is required")
 	}
 
-	if product.Images == nil {
-		product.Images = []string{}
+	existingProduct, err := repository{}.GetProduct(product.Sku)
+	if err != nil {
+		return fmt.Errorf("Error asserting product existance: %w", err)
 	}
 
-	err := repository{}.CreateOrUpdateProduct(product)
-	if err != nil {
-		return fmt.Errorf("Error creating product: %w", err)
+	if existingProduct == nil {
+		err := repository{}.CreateProduct(product)
+		if err != nil {
+			return fmt.Errorf("Error creating product: %w", err)
+		}
 	}
 
 	return nil
