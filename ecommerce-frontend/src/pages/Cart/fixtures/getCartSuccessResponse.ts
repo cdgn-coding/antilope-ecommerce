@@ -1,6 +1,7 @@
 import { Response } from "@models/Response";
 import { Cart } from "@models/Cart";
 import headsetRose from "./headsetRose.jpg";
+import { Categories } from "@models/Category";
 
 const cartSuccessResponse: Response<Cart> = {
   data: {
@@ -18,6 +19,7 @@ const cartSuccessResponse: Response<Cart> = {
           stock: 10,
           createdAt: new Date("2020-05-01T00:00:00.000Z"),
           images: [headsetRose as any],
+          category: Categories.SMALL_APPS,
         },
         quantity: 2,
       },
