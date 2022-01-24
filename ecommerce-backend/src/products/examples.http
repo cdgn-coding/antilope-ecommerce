@@ -3,8 +3,9 @@ PUT http://localhost:3000/products/123
 content-type: application/json
 
 {
+    "Name": "Updated name",
     "Sku": "456"
 }
 
 ### Get Product
-GET http://localhost:3000/products/456
+GET http://localhost:3000/products/18981918

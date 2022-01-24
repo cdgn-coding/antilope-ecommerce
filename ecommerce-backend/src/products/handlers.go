@@ -19,7 +19,7 @@ func PutProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = usecases{}.CreateOrUpdateProduct(&product)
+	err = usecases{}.SaveProduct(&product)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing product: %w", err).Error()))
@@ -37,7 +37,7 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 
 	product, err := usecases{}.GetProduct(sku)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(fmt.Errorf("Error getting product: %w", err).Error()))
 		return
 	}

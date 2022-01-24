@@ -7,21 +7,14 @@ import (
 
 type usecases struct{}
 
-func (u usecases) CreateOrUpdateProduct(product *Product) error {
+func (u usecases) SaveProduct(product *Product) error {
 	if product.Sku == "" {
 		return errors.New("Sku is required")
 	}
 
-	existingProduct, err := repository{}.GetProduct(product.Sku)
+	err := repository{}.SaveProduct(product)
 	if err != nil {
-		return fmt.Errorf("Error asserting product existance: %w", err)
-	}
-
-	if existingProduct == nil {
-		err := repository{}.CreateProduct(product)
-		if err != nil {
-			return fmt.Errorf("Error creating product: %w", err)
-		}
+		return fmt.Errorf("Error creating product: %w", err)
 	}
 
 	return nil
