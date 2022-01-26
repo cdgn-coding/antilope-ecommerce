@@ -9,8 +9,14 @@ type Product struct {
 	Name        string
 	Price       int64
 	Description string
-	category    string `gorm:"index"`
+	Category    string `gorm:"index"`
 	Stock       int64
-	//Images      []string
-	CreatedAt time.Time
+	Images      []Images  `gorm:"foreignKey:ProductSku"`
+	CreatedAt   time.Time `gorm:"autoUpdateTime"`
+	UpdatedAt   time.Time `gorm:"autoCreateTime"`
+}
+
+type Images struct {
+	ProductSku string `gorm:"primaryKey"`
+	Path       string
 }

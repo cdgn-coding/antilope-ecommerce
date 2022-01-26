@@ -22,5 +22,6 @@ func main() {
 	r.HandleFunc("/ping", pingHandler)
 	r.Handle("/products/{sku}", http.HandlerFunc(products.PutProduct)).Methods("PUT")
 	r.Handle("/products/{sku}", http.HandlerFunc(products.GetProduct)).Methods("GET")
+	r.Handle("/{products:products(?:\\/)?}", http.HandlerFunc(products.SearchProducts)).Methods("GET")
 	log.Fatal(http.ListenAndServe(":3000", r))
 }

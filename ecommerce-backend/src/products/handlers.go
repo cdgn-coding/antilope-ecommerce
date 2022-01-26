@@ -19,7 +19,7 @@ func PutProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = usecases{}.SaveProduct(&product)
+	err = usecases{}.SaveProduct(product)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing product: %w", err).Error()))
@@ -43,6 +43,23 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 	}
 
 	resultJson, _ := json.Marshal(product)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(resultJson))
+}
+
+func SearchProducts(w http.ResponseWriter, r *http.Request) {
+	search := r.URL.Query().Get("search")
+	page := r.URL.Query().Get("page")
+	category := r.URL.Query().Get("category")
+
+	products, err := usecases{}.SearchProducts(search, page, category)
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte(fmt.Errorf("Error getting products: %w", err).Error()))
+		return
+	}
+
+	resultJson, _ := json.Marshal(products)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))
 }

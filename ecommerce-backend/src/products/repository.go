@@ -8,7 +8,7 @@ import (
 
 type repository struct{}
 
-func (r repository) SaveProduct(product *Product) error {
+func (r repository) SaveProduct(product Product) error {
 	db, err := clients.GetPostgresClient()
 	if err != nil {
 		return fmt.Errorf("Error connecting to database: %s", err)
@@ -23,12 +23,22 @@ func (r repository) SaveProduct(product *Product) error {
 	return nil
 }
 
-func (r repository) GetProduct(sku string) (*Product, error) {
+func (r repository) GetProduct(sku string) (Product, error) {
+	db, err := clients.GetPostgresClient()
+	if err != nil {
+		return Product{}, fmt.Errorf("Error connecting to database: %s", err)
+	}
+	var product Product
+	result := db.First(&product, sku)
+	return product, result.Error
+}
+
+func (r repository) SearchProductsMatching(product Product) ([]Product, error) {
 	db, err := clients.GetPostgresClient()
 	if err != nil {
 		return nil, fmt.Errorf("Error connecting to database: %s", err)
 	}
-	product := &Product{}
-	result := db.First(&product, sku)
-	return product, result.Error
+	var products []Product
+	result := db.Where(&product).Find(&products)
+	return products, result.Error
 }
