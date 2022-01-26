@@ -73,8 +73,8 @@ func (u usecases) SearchProducts(search, category string, page int) (responses.P
 	totalPages := math.Ceil(float64(totalItems) / float64(limit))
 	response := responses.PaginatedResponse{
 		Data:       products,
-		Page:       page,
-		TotalPages: int(totalPages),
+		Page:       int64(page),
+		TotalPages: int64(totalPages),
 		TotalItems: totalItems,
 	}
 

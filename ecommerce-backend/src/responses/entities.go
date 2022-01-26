@@ -5,8 +5,8 @@ type Response struct {
 }
 
 type PaginatedResponse struct {
-	Page       int         `json:"page"`
-	TotalPages int         `json:"totalPages"`
-	TotalItems int         `json:"totalItems"`
+	Page       int64       `json:"page"`
+	TotalPages int64       `json:"totalPages"`
+	TotalItems int64       `json:"totalItems"`
 	Data       interface{} `json:"data"`
 }

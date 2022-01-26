@@ -43,16 +43,12 @@ func (r repository) SearchProductsMatching(product Product, offset, limit int) (
 	return products, result.Error
 }
 
-type TotalResult struct {
-	Total int
-}
-
-func (r repository) GetTotalProductsMatching(product Product) (int, error) {
+func (r repository) GetTotalProductsMatching(product Product) (int64, error) {
 	db, err := clients.GetPostgresClient()
 	if err != nil {
 		return 0, fmt.Errorf("Error connecting to database: %s", err)
 	}
-	var queryResult TotalResult
-	queryResponse := db.Model(&Product{}).Select("sku, count(*) as total").Where(&product).Group("sku").First(&queryResult)
-	return queryResult.Total, queryResponse.Error
+	var count int64
+	queryResponse := db.Model(&Product{}).Where(&product).Count(&count)
+	return count, queryResponse.Error
 }
