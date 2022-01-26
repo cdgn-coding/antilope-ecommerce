@@ -3,37 +3,46 @@ package products
 import (
 	"errors"
 	"fmt"
+	"math"
+
+	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 )
 
 type usecases struct{}
 
-func (u usecases) SaveProduct(product Product) error {
+func (u usecases) SaveProduct(product Product) (responses.Response, error) {
 	if product.Sku == "" {
-		return errors.New("Sku is required")
+		return responses.Response{}, errors.New("Sku is required")
 	}
 
 	err := repository{}.SaveProduct(product)
 	if err != nil {
-		return fmt.Errorf("Error creating product: %w", err)
+		return responses.Response{}, fmt.Errorf("Error creating product: %w", err)
 	}
 
-	return nil
+	response := responses.Response{
+		Data: product,
+	}
+	return response, nil
 }
 
-func (u usecases) GetProduct(sku string) (Product, error) {
+func (u usecases) GetProduct(sku string) (responses.Response, error) {
 	if sku == "" {
-		return Product{}, errors.New("Sku is required")
+		return responses.Response{}, errors.New("Sku is required")
 	}
 
 	product, err := repository{}.GetProduct(sku)
 	if err != nil {
-		return Product{}, fmt.Errorf("Error fetching product: %w", err)
+		return responses.Response{}, fmt.Errorf("Error fetching product: %w", err)
 	}
 
-	return product, nil
+	response := responses.Response{
+		Data: product,
+	}
+	return response, nil
 }
 
-func (u usecases) SearchProducts(search, page, category string) ([]Product, error) {
+func (u usecases) SearchProducts(search, category string, page int) (responses.PaginatedResponse, error) {
 	var product Product
 
 	if category != "" {
@@ -44,11 +53,30 @@ func (u usecases) SearchProducts(search, page, category string) ([]Product, erro
 		product.Name = search
 	}
 
-	products, err := repository{}.SearchProductsMatching(product)
-
-	if err != nil {
-		return nil, fmt.Errorf("Error searching products: %w", err)
+	if page == 0 {
+		page = 1
 	}
 
-	return products, nil
+	limit := 15
+	offset := page * limit
+	products, err := repository{}.SearchProductsMatching(product, offset, limit)
+
+	if err != nil {
+		return responses.PaginatedResponse{}, fmt.Errorf("Error searching products: %w", err)
+	}
+
+	totalItems, err := repository{}.GetTotalProductsMatching(product)
+	if err != nil {
+		return responses.PaginatedResponse{}, fmt.Errorf("Error counting products: %w", err)
+	}
+
+	totalPages := math.Ceil(float64(totalItems) / float64(limit))
+	response := responses.PaginatedResponse{
+		Data:       products,
+		Page:       page,
+		TotalPages: int(totalPages),
+		TotalItems: totalItems,
+	}
+
+	return response, nil
 }

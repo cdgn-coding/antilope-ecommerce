@@ -1,12 +1,12 @@
 package responses
 
 type Response struct {
-	data interface{}
+	Data interface{} `json:"data"`
 }
 
 type PaginatedResponse struct {
-	page       int
-	totalPages int
-	totalItems int
-	data       interface{}
+	Page       int         `json:"page"`
+	TotalPages int         `json:"totalPages"`
+	TotalItems int         `json:"totalItems"`
+	Data       interface{} `json:"data"`
 }

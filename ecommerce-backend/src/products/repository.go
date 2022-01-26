@@ -33,12 +33,26 @@ func (r repository) GetProduct(sku string) (Product, error) {
 	return product, result.Error
 }
 
-func (r repository) SearchProductsMatching(product Product) ([]Product, error) {
+func (r repository) SearchProductsMatching(product Product, offset, limit int) ([]Product, error) {
 	db, err := clients.GetPostgresClient()
 	if err != nil {
 		return nil, fmt.Errorf("Error connecting to database: %s", err)
 	}
 	var products []Product
-	result := db.Where(&product).Find(&products)
+	result := db.Where(&product).Find(&products).Offset(offset).Limit(limit)
 	return products, result.Error
+}
+
+type TotalResult struct {
+	Total int
+}
+
+func (r repository) GetTotalProductsMatching(product Product) (int, error) {
+	db, err := clients.GetPostgresClient()
+	if err != nil {
+		return 0, fmt.Errorf("Error connecting to database: %s", err)
+	}
+	var queryResult TotalResult
+	queryResponse := db.Model(&Product{}).Select("sku, count(*) as total").Where(&product).Group("sku").First(&queryResult)
+	return queryResult.Total, queryResponse.Error
 }
