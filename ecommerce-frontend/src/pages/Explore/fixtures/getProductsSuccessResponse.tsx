@@ -3,6 +3,7 @@ import { Product } from "@models/Product";
 import headsetRose from "./headsetRose.jpg";
 import smartwatch from "./smartwatch.jpg";
 import headsetYellow from "./headsetYellow.jpg";
+import { Categories } from "@models/Category";
 
 const uniqueProducts = [
   {
@@ -13,6 +14,7 @@ const uniqueProducts = [
     stock: 10,
     createdAt: new Date("2020-05-01T00:00:00.000Z"),
     images: [headsetRose as any],
+    category: Categories.SMALL_APPS,
   },
   {
     name: "Smartwatch Apple Watch Series",
@@ -22,6 +24,7 @@ const uniqueProducts = [
     stock: 10,
     createdAt: new Date("2020-05-01T00:00:00.000Z"),
     images: [smartwatch as any],
+    category: Categories.SMALL_APPS,
   },
   {
     name: "Headset Beats Solo3",
@@ -31,6 +34,7 @@ const uniqueProducts = [
     stock: 10,
     createdAt: new Date("2020-05-01T00:00:00.000Z"),
     images: [headsetYellow as any],
+    category: Categories.SMALL_APPS,
   },
 ];
 

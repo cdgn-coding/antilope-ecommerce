@@ -1,0 +1,15 @@
+### Create Product
+PUT http://localhost:3000/products/123
+content-type: application/json
+
+{
+    "Name": "TV",
+    "Category": "Electronics",
+    "Sku": "123"
+}
+
+### Get Product
+GET http://localhost:3000/products/123
+
+### Search Products
+GET http://localhost:3000/products/
