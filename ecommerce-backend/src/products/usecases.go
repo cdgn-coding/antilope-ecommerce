@@ -3,8 +3,8 @@ package products
 import (
 	"errors"
 	"fmt"
+	"io"
 	"math"
-	"mime/multipart"
 
 	"github.com/segmentio/ksuid"
 
@@ -84,7 +84,7 @@ func (u usecases) SearchProducts(search, category string, page int) (responses.P
 	return response, nil
 }
 
-func (u usecases) AddImageToProduct(sku string, image multipart.File) (responses.Response, error) {
+func (u usecases) AddImageToProduct(sku string, image io.ReadSeeker) (responses.Response, error) {
 	ksuid, err := ksuid.NewRandom()
 
 	if err != nil {

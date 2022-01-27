@@ -1,7 +1,7 @@
 package products
 
 import (
-	"mime/multipart"
+	"io"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -9,7 +9,7 @@ import (
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/clients"
 )
 
-func uploadFileToS3(key string, file multipart.File) error {
+func uploadFileToS3(key string, file io.ReadSeeker) error {
 	bucket := os.Getenv("PRODUCTS_BUCKET_ID")
 	s3Client := clients.GetS3Client()
 
