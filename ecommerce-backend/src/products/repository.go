@@ -29,7 +29,7 @@ func (r repository) GetProduct(sku string) (Product, error) {
 		return Product{}, fmt.Errorf("Error connecting to database: %s", err)
 	}
 	var product Product
-	result := db.First(&product, sku)
+	result := db.Preload("Images").First(&product, sku)
 	return product, result.Error
 }
 
@@ -39,7 +39,7 @@ func (r repository) SearchProductsMatching(product Product, offset, limit int) (
 		return nil, fmt.Errorf("Error connecting to database: %s", err)
 	}
 	var products []Product
-	result := db.Where(&product).Find(&products).Offset(offset).Limit(limit)
+	result := db.Preload("Images").Where(&product).Find(&products).Offset(offset).Limit(limit)
 	return products, result.Error
 }
 
