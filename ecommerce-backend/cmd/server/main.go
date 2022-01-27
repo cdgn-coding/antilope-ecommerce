@@ -23,5 +23,6 @@ func main() {
 	r.Handle("/products/{sku}", http.HandlerFunc(products.PutProduct)).Methods("PUT")
 	r.Handle("/products/{sku}", http.HandlerFunc(products.GetProduct)).Methods("GET")
 	r.Handle("/{products:products(?:\\/)?}", http.HandlerFunc(products.SearchProducts)).Methods("GET")
+	r.Handle("/products/{sku}/images", http.HandlerFunc(products.PutProductImage)).Methods("POST")
 	log.Fatal(http.ListenAndServe(":3000", r))
 }
