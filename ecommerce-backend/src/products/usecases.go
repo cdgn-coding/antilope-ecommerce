@@ -4,6 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"mime/multipart"
+
+	"github.com/segmentio/ksuid"
 
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 )
@@ -77,6 +80,26 @@ func (u usecases) SearchProducts(search, category string, page int) (responses.P
 		TotalPages: int64(totalPages),
 		TotalItems: totalItems,
 	}
+
+	return response, nil
+}
+
+func (u usecases) AddImageToProduct(sku string, image multipart.File) (responses.Response, error) {
+	ksuid, err := ksuid.NewRandom()
+
+	if err != nil {
+		return responses.Response{}, fmt.Errorf("Error generating ksuid: %w", err)
+	}
+
+	fileKey := fmt.Sprintf("%s/%s.jpg", sku, ksuid.String())
+	err = uploadFileToS3(fileKey, image)
+	if err != nil {
+		return responses.Response{}, fmt.Errorf("Error uploading image: %w", err)
+	}
+
+	savedImage, err := repository{}.SaveImageToProduct(sku, ksuid.String())
+
+	response := responses.Response{Data: savedImage}
 
 	return response, nil
 }

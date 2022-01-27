@@ -67,3 +67,28 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))
 }
+
+func PutProductImage(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	sku := params["sku"]
+	// Get image bytes from body request
+	file, header, _ := r.FormFile("image")
+	filetype := header.Header.Get("Content-Type")
+
+	if filetype != "image/jpeg" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Invalid image type"))
+		return
+	}
+
+	responseResult, err := usecases{}.AddImageToProduct(sku, file)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Errorf("Error adding image to Product: %w", err).Error()))
+		return
+	}
+
+	resultJson, _ := json.Marshal(responseResult)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(resultJson))
+}

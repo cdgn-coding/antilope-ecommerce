@@ -1,7 +1,6 @@
 package clients
 
 import (
-	"io"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -9,11 +8,15 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 )
 
-func getS3Client(bucketName, key string, rs io.ReadSeeker) *s3.S3 {
-	const localEndpoint = "http://localstack:4566"
+func GetS3Client() *s3.S3 {
+	const localEndpoint = "http://localhost:4566"
 
 	if os.Getenv("env") == "local" {
-		config := aws.Config{Endpoint: aws.String(localEndpoint), Region: aws.String("us-east-1")}
+		config := aws.Config{
+			Endpoint:         aws.String(localEndpoint),
+			Region:           aws.String("us-east-1"),
+			S3ForcePathStyle: aws.Bool(true),
+		}
 		session := session.Must(session.NewSession())
 		return s3.New(session, &config)
 	}
