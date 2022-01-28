@@ -1,1 +1,1 @@
-export { productsBucketId } from "./backend";
+export { productsBucketId, cartTableId } from "./backend";

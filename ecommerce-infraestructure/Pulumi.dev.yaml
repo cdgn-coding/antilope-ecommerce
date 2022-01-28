@@ -1,6 +1,4 @@
-encryptionsalt: v1:DOs6imyZvfE=:v1:nMF8mb6V4BeU0ads:6VMSuHciPULYX3kbf3arqC71hahpSQ==
 config:
-  aws:region: us-east-1
   aws:accessKey: test
   aws:endpoints:
     - acm: http://localhost:4566
@@ -63,6 +61,7 @@ config:
       swf: http://localhost:4566
       transfer: http://localhost:4566
       xray: http://localhost:4566
+  aws:region: us-east-1
   aws:s3ForcePathStyle: "true"
   aws:secretKey: test
   aws:skipCredentialsValidation: "true"
