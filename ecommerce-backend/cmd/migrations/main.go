@@ -22,7 +22,7 @@ func main() {
 	}
 
 	log.Print("Automigrating...")
-	err = db.AutoMigrate(&products.Product{}, &products.Images{})
+	err = db.AutoMigrate(&products.Product{}, &products.Image{})
 
 	if err != nil {
 		log.Fatal(err)

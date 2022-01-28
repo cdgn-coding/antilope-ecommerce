@@ -11,12 +11,12 @@ type Product struct {
 	Description string    `json:"description"`
 	Category    string    `json:"category" gorm:"index"`
 	Stock       int64     `json:"stock"`
-	Images      []Images  `json:"images" gorm:"foreignKey:ProductSku"`
+	Images      []Image   `json:"images" gorm:"foreignKey:ProductSku"`
 	CreatedAt   time.Time `json:"createdAt" gorm:"autoUpdateTime"`
 	UpdatedAt   time.Time `json:"updatedAt" gorm:"autoCreateTime"`
 }
 
-type Images struct {
-	ProductSku string `json:"productSku" gorm:"primaryKey"`
-	Path       string `json:"path"`
+type Image struct {
+	ID         string `json:"id" gorm:"primaryKey"`
+	ProductSku string `json:"productSku" gorm:"index"`
 }
