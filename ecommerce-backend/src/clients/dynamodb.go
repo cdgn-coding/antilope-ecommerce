@@ -9,7 +9,7 @@ import (
 )
 
 func GetDynamoDBClient() *dynamo.DB {
-	const localEndpoint = "http://localhost:8000"
+	const localEndpoint = "http://localhost:4566"
 
 	if os.Getenv("env") == "local" {
 		config := aws.Config{Endpoint: aws.String(localEndpoint), Region: aws.String("us-east-1")}
