@@ -1,0 +1,10 @@
+### Get Cart by ID
+GET http://localhost:3000/carts/cartId
+
+### PUT Product Quantity to Cart
+PUT http://localhost:3000/carts/cartId/productId
+content-type: application/json
+
+{
+    "Quantity": 1
+}

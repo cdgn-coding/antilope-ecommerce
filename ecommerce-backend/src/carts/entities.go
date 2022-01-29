@@ -5,7 +5,7 @@ type Cart struct {
 	Subtotal float64             `json:"subtotal"`
 	Shipment float64             `json:"shipment"`
 	Total    float64             `json:"total"`
-	Items    map[string]CartItem `json:"items" dynamo:",set"`
+	Items    map[string]CartItem `json:"items"`
 }
 
 type CartItem struct {

@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/carts"
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -24,5 +25,7 @@ func main() {
 	r.Handle("/products/{sku}", http.HandlerFunc(products.GetProduct)).Methods("GET")
 	r.Handle("/{products:products(?:\\/)?}", http.HandlerFunc(products.SearchProducts)).Methods("GET")
 	r.Handle("/products/{sku}/images", http.HandlerFunc(products.PutProductImage)).Methods("POST")
+	r.Handle("/carts/{id}", http.HandlerFunc(carts.GetCart)).Methods("GET")
+	r.Handle("/carts/{id}/{sku}", http.HandlerFunc(carts.PutProductQuantity)).Methods("PUT")
 	log.Fatal(http.ListenAndServe(":3000", r))
 }
