@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 	"github.com/gorilla/mux"
 )
 
 func GetCart(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
-	response, err := Usecases{}.GetCartById(id)
+	cart, err := Usecases{}.GetCartById(id)
 
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -18,6 +19,7 @@ func GetCart(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	response := responses.Response{Data: cart}
 	responseJson, _ := json.Marshal(response)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(responseJson))
@@ -35,7 +37,7 @@ func PutProductQuantity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
 	sku := params["sku"]
-	response, err := Usecases{}.PutProductQuantity(id, sku, cartItem)
+	cart, err := Usecases{}.PutProductQuantity(id, sku, cartItem)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -43,6 +45,7 @@ func PutProductQuantity(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	response := responses.Response{Data: cart}
 	responseJson, _ := json.Marshal(response)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(responseJson))
