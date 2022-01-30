@@ -9,7 +9,7 @@ import (
 
 type Usecases struct{}
 
-func addCartItemToPurchase(purchase *Purchase, productSku string, productQuantity int64) {
+func addProductToPurchase(purchase *Purchase, productSku string, productQuantity int64) {
 	var product *products.Product
 	var err error
 
@@ -37,7 +37,7 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 	}
 
 	for productSku, cartItem := range cart.Items {
-		addCartItemToPurchase(&purchase, productSku, cartItem.Quantity)
+		addProductToPurchase(&purchase, productSku, cartItem.Quantity)
 	}
 
 	err = repository{}.SavePurchase(purchase)
@@ -46,7 +46,6 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 
 func (u Usecases) BuyProduct(userId, productSku string) (*Purchase, error) {
 	var purchase Purchase
-	var product *products.Product
 	var err error
 
 	purchase, err = Purchase{}.createPurchase(userId)
@@ -54,12 +53,7 @@ func (u Usecases) BuyProduct(userId, productSku string) (*Purchase, error) {
 		return nil, err
 	}
 
-	product, err = products.Usecases{}.GetProduct(productSku)
-	if err != nil {
-		return nil, err
-	}
-
-	purchase.addPack(*product, 1)
+	addProductToPurchase(&purchase, productSku, 1)
 	err = repository{}.SavePurchase(purchase)
 
 	if err != nil {
