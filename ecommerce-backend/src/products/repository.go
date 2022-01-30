@@ -29,7 +29,7 @@ func (r repository) GetProduct(sku string) (Product, error) {
 		return Product{}, fmt.Errorf("Error connecting to database: %s", err)
 	}
 	var product Product
-	result := db.Preload("Images").First(&product, sku)
+	result := db.Preload("Images").Where("sku = ?", sku).First(&product)
 	return product, result.Error
 }
 

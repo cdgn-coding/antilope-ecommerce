@@ -10,39 +10,41 @@ import (
 )
 
 func CreateProductPurchase(w http.ResponseWriter, r *http.Request) {
-	var responseResult responses.Response
+	var purchase *Purchase
 	var err error
 
 	params := mux.Vars(r)
 	userId := params["userId"]
 	productSku := params["productSku"]
 
-	responseResult, err = Usecases{}.BuyProduct(userId, productSku)
+	purchase, err = Usecases{}.BuyProduct(userId, productSku)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing purchase: %w", err).Error()))
 		return
 	}
 
+	responseResult := responses.Response{Data: purchase}
 	resultJson, _ := json.Marshal(responseResult)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))
 }
 
 func CreateCartPurchase(w http.ResponseWriter, r *http.Request) {
-	var responseResult responses.Response
+	var purchase *Purchase
 	var err error
 
 	params := mux.Vars(r)
 	userId := params["userId"]
 
-	responseResult, err = Usecases{}.BuyCart(userId)
+	purchase, err = Usecases{}.BuyCart(userId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing purchase: %w", err).Error()))
 		return
 	}
 
+	responseResult := responses.Response{Data: purchase}
 	resultJson, _ := json.Marshal(responseResult)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))
