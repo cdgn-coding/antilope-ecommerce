@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
+	"github.com/segmentio/ksuid"
 )
 
 type PurchaseStatus string
@@ -19,6 +20,7 @@ const (
 
 type Purchase struct {
 	ID        string    `json:"id" gorm:"primaryKey"`
+	UserID    string    `json:"userId"`
 	Amount    float64   `json:"amount"`
 	Status    string    `json:"status"`
 	Packs     []Pack    `json:"packs" gorm:"foreignKey:ID"`
@@ -38,4 +40,43 @@ type Pack struct {
 type Invoice struct {
 	ID         string `json:"id" gorm:"primaryKey"`
 	PurchaseID string `json:"purchaseId" gorm:"index"`
+}
+
+func (p Purchase) createPurchase(userId string) (Purchase, error) {
+	id, err := ksuid.NewRandom()
+	if err != nil {
+		return Purchase{}, err
+	}
+
+	purchase := Purchase{
+		ID:     id.String(),
+		UserID: userId,
+		Status: CREATED,
+		Amount: 0,
+		Packs:  []Pack{},
+	}
+
+	return purchase, nil
+}
+
+func (purchase *Purchase) addPack(product products.Product, quantity int64) (Purchase, error) {
+	id, err := ksuid.NewRandom()
+	if err != nil {
+		return *purchase, err
+	}
+
+	packAmount := product.Price * float64(quantity)
+	pack := Pack{
+		ID:         id.String(),
+		PurchaseID: purchase.ID,
+		ProductSku: product.Sku,
+		Product:    product,
+		Quantity:   quantity,
+		Amount:     packAmount,
+	}
+
+	purchase.Packs = append(purchase.Packs, pack)
+	purchase.Amount += packAmount
+
+	return *purchase, nil
 }

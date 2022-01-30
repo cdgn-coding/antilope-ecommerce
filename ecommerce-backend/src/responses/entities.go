@@ -10,3 +10,5 @@ type PaginatedResponse struct {
 	TotalItems int64       `json:"totalItems"`
 	Data       interface{} `json:"data"`
 }
+
+var EmptyResponse Response = Response{}
