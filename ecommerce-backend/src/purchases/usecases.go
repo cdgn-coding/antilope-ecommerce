@@ -13,7 +13,7 @@ func (u Usecases) BuyCart(userId string) (responses.Response, error) {
 
 func (u Usecases) BuyProduct(userId, productSku string) (responses.Response, error) {
 	var purchase Purchase
-	var product products.Product
+	var product *products.Product
 	var err error
 
 	purchase, err = Purchase{}.createPurchase(userId)
@@ -21,14 +21,12 @@ func (u Usecases) BuyProduct(userId, productSku string) (responses.Response, err
 		return responses.EmptyResponse, err
 	}
 
-	r, err := products.Usecases{}.GetProduct(productSku)
-	product = r.Data.(products.Product)
-
+	product, err = products.Usecases{}.GetProduct(productSku)
 	if err != nil {
 		return responses.EmptyResponse, err
 	}
 
-	purchase.addPack(product, 1)
+	purchase.addPack(*product, 1)
 	err = repository{}.SavePurchase(purchase)
 
 	if err != nil {
