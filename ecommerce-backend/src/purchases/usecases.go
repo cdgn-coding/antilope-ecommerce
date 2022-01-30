@@ -7,8 +7,8 @@ import (
 
 type usecases struct{}
 
-func (u usecases) BuyCart(userId, cartId string) (Purchase, error) {
-	return Purchase{}, nil
+func (u usecases) BuyCart(userId string) (responses.Response, error) {
+	return responses.EmptyResponse, nil
 }
 
 func (u usecases) BuyProduct(userId, productSku string) (responses.Response, error) {

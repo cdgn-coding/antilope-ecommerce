@@ -1,2 +1,5 @@
 ### Buy product
-POST http://localhost:3000/purchases/userId/products/123
+POST http://localhost:3000/users/userId/purchases/products/123
+
+### Buy Cart
+POST http://localhost:3000/users/userId/purchases/cart
