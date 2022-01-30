@@ -27,7 +27,7 @@ func main() {
 	err = db.AutoMigrate(&products.Product{}, &products.Image{})
 
 	log.Print("Purchases...")
-	err = db.AutoMigrate(&purchases.Purchase{}, &purchases.Pack{}, &purchases.Invoice{})
+	err = db.AutoMigrate(&purchases.Purchase{}, &purchases.Pack{}, &purchases.Invoice{}, &purchases.Payment{})
 
 	if err != nil {
 		log.Fatal(err)

@@ -55,7 +55,6 @@ func (u Usecases) BuyProduct(userId, productSku string) (*Purchase, error) {
 
 	addProductToPurchase(&purchase, productSku, 1)
 	err = repository{}.SavePurchase(purchase)
-
 	if err != nil {
 		return nil, err
 	}

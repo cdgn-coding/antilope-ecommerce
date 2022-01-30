@@ -23,9 +23,15 @@ type Purchase struct {
 	UserID    string    `json:"userId"`
 	Amount    float64   `json:"amount"`
 	Status    string    `json:"status"`
+	Payment   Payment   `json:"payment" gorm:"foreignKey:PurchaseID"`
 	Packs     []Pack    `json:"packs" gorm:"foreignKey:ID"`
 	CreatedAt time.Time `json:"createdAt" gorm:"autoUpdateTime"`
 	UpdatedAt time.Time `json:"updatedAt" gorm:"autoCreateTime"`
+}
+
+type Payment struct {
+	PurchaseID    string `json:"purchaseId"`
+	MercadoPagoID string `json:"mercadoPagoId"`
 }
 
 type Pack struct {
