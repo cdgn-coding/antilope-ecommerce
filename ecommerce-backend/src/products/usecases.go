@@ -11,9 +11,9 @@ import (
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 )
 
-type usecases struct{}
+type Usecases struct{}
 
-func (u usecases) SaveProduct(product Product) (responses.Response, error) {
+func (u Usecases) SaveProduct(product Product) (responses.Response, error) {
 	if product.Sku == "" {
 		return responses.Response{}, errors.New("Sku is required")
 	}
@@ -29,7 +29,7 @@ func (u usecases) SaveProduct(product Product) (responses.Response, error) {
 	return response, nil
 }
 
-func (u usecases) GetProduct(sku string) (responses.Response, error) {
+func (u Usecases) GetProduct(sku string) (responses.Response, error) {
 	if sku == "" {
 		return responses.Response{}, errors.New("Sku is required")
 	}
@@ -45,7 +45,7 @@ func (u usecases) GetProduct(sku string) (responses.Response, error) {
 	return response, nil
 }
 
-func (u usecases) SearchProducts(search, category string, page int) (responses.PaginatedResponse, error) {
+func (u Usecases) SearchProducts(search, category string, page int) (responses.PaginatedResponse, error) {
 	var product Product
 
 	if category != "" {
@@ -84,7 +84,7 @@ func (u usecases) SearchProducts(search, category string, page int) (responses.P
 	return response, nil
 }
 
-func (u usecases) AddImageToProduct(sku string, image io.ReadSeeker) (responses.Response, error) {
+func (u Usecases) AddImageToProduct(sku string, image io.ReadSeeker) (responses.Response, error) {
 	ksuid, err := ksuid.NewRandom()
 
 	if err != nil {

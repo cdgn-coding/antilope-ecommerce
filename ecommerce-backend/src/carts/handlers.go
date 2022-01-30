@@ -10,7 +10,7 @@ import (
 func GetCart(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
-	response, err := usecases{}.GetCartById(id)
+	response, err := Usecases{}.GetCartById(id)
 
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -35,7 +35,7 @@ func PutProductQuantity(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]
 	sku := params["sku"]
-	response, err := usecases{}.PutProductQuantity(id, sku, cartItem)
+	response, err := Usecases{}.PutProductQuantity(id, sku, cartItem)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

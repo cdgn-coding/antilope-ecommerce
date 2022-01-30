@@ -4,14 +4,14 @@ import (
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 )
 
-type usecases struct{}
+type Usecases struct{}
 
-func (u usecases) GetCartById(id string) (responses.Response, error) {
+func (u Usecases) GetCartById(id string) (responses.Response, error) {
 	cart, err := repository{}.GetCartById(id)
 	return responses.Response{Data: cart}, err
 }
 
-func (u usecases) PutProductQuantity(id, sku string, cartItem CartItem) (responses.Response, error) {
+func (u Usecases) PutProductQuantity(id, sku string, cartItem CartItem) (responses.Response, error) {
 	var err error
 	var cart Cart
 

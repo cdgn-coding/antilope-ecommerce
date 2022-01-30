@@ -5,13 +5,13 @@ import (
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 )
 
-type usecases struct{}
+type Usecases struct{}
 
-func (u usecases) BuyCart(userId string) (responses.Response, error) {
+func (u Usecases) BuyCart(userId string) (responses.Response, error) {
 	return responses.EmptyResponse, nil
 }
 
-func (u usecases) BuyProduct(userId, productSku string) (responses.Response, error) {
+func (u Usecases) BuyProduct(userId, productSku string) (responses.Response, error) {
 	var purchase Purchase
 	var product products.Product
 	var err error
@@ -21,7 +21,8 @@ func (u usecases) BuyProduct(userId, productSku string) (responses.Response, err
 		return responses.EmptyResponse, err
 	}
 
-	product, err = repository{}.GetProduct(productSku)
+	r, err := products.Usecases{}.GetProduct(productSku)
+	product = r.Data.(products.Product)
 
 	if err != nil {
 		return responses.EmptyResponse, err

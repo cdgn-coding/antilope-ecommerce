@@ -17,7 +17,7 @@ func CreateProductPurchase(w http.ResponseWriter, r *http.Request) {
 	userId := params["userId"]
 	productSku := params["productSku"]
 
-	responseResult, err = usecases{}.BuyProduct(userId, productSku)
+	responseResult, err = Usecases{}.BuyProduct(userId, productSku)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing purchase: %w", err).Error()))
@@ -36,7 +36,7 @@ func CreateCartPurchase(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	userId := params["userId"]
 
-	responseResult, err = usecases{}.BuyCart(userId)
+	responseResult, err = Usecases{}.BuyCart(userId)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing purchase: %w", err).Error()))
