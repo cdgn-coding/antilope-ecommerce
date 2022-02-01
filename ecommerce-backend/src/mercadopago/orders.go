@@ -5,7 +5,22 @@ import (
 	"fmt"
 )
 
+const (
+	CLOSED  = "closed"
+	OPENED  = "opened"
+	EXPIRED = "expired"
+)
+
 type Order struct {
+	Id                string `json:"id"`
+	ExternalReference string `json:"external_reference"`
+	PreferenceId      string `json:"preference_id"`
+	OrderStatus       string `json:"order_status"`
+	Status            string `json:"status"`
+}
+
+func (order *Order) IsTotallyPaid() bool {
+	return order.OrderStatus == CLOSED
 }
 
 func GetOrder(orderId string) (Order, error) {

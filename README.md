@@ -1,1 +1,7 @@
-# antilope-ecommerce
+# Antilope Ecommerce
+
+## Development
+
+### Project structure
+
+### How to run
