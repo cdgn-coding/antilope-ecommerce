@@ -30,8 +30,9 @@ type Purchase struct {
 }
 
 type Payment struct {
-	PurchaseID    string `json:"purchaseId"`
-	MercadoPagoID string `json:"mercadoPagoId"`
+	PurchaseID            string `json:"purchaseId" gorm:"index"`
+	MercadoPagoURL        string `json:"mercadoPagoURL"`
+	MercadoPagoPreference string `json:"mercadoPagoPreference"`
 }
 
 type Pack struct {
@@ -84,5 +85,14 @@ func (purchase *Purchase) addPack(product products.Product, quantity int64) (Pur
 	purchase.Packs = append(purchase.Packs, pack)
 	purchase.Amount += packAmount
 
+	return *purchase, nil
+}
+
+func (purchase *Purchase) createPayment(mercadoPagoInitPoint, mercadoPagoPreference string) (Purchase, error) {
+	purchase.Payment = Payment{
+		PurchaseID:            purchase.ID,
+		MercadoPagoURL:        mercadoPagoInitPoint,
+		MercadoPagoPreference: mercadoPagoPreference,
+	}
 	return *purchase, nil
 }

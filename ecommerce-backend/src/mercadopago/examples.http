@@ -1,0 +1,26 @@
+### Create Preference
+POST https://api.mercadopago.com/checkout/preferences
+Authorization: Bearer ApplicationToken
+
+{
+    "items": [
+        {
+            "title": "TV",
+            "quantity": 1,
+            "unit_price": 100.05
+        }
+    ],
+    "external_reference": "external_reference",
+}
+
+### Merchant Order
+GET https://api.mercadopago.com/merchant_orders/4066539434
+Authorization: Bearer ApplicationToken
+
+### Payment
+GET https://api.mercadopago.com/v1/payments/19886439539
+Authorization: Bearer ApplicationToken
+
+### Notification
+GET https://api.mercadolibre.com/collections/notifications/19886439539
+Authorization: Bearer ApplicationToken
