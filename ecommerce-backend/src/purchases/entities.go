@@ -5,6 +5,7 @@ import (
 
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
 	"github.com/segmentio/ksuid"
+	"gorm.io/gorm"
 )
 
 type PurchaseStatus string
@@ -19,6 +20,7 @@ const (
 )
 
 type Purchase struct {
+	gorm.Model
 	ID        string    `json:"id" gorm:"primaryKey"`
 	UserID    string    `json:"userId"`
 	Amount    float64   `json:"amount"`
@@ -34,7 +36,7 @@ type Payment struct {
 	ID               string `json:"id" gorm:"primaryKey"`
 	PurchaseID       string `json:"purchaseId" gorm:"index"`
 	MercadoPagoURL   string `json:"mercadoPagoURL"`
-	MercadoPagoOrder string `json:"mercadoPagoOrder,omitempty""`
+	MercadoPagoOrder string `json:"mercadoPagoOrder,omitempty"`
 }
 
 type Pack struct {
