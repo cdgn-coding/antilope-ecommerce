@@ -2,7 +2,6 @@ package purchases
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/carts"
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/mercadopago"
@@ -11,16 +10,18 @@ import (
 
 type Usecases struct{}
 
-func addProductToPurchase(purchase *Purchase, productSku string, productQuantity int64) {
+func addProductToPurchase(purchase *Purchase, productSku string, productQuantity int64) error {
 	var product *products.Product
 	var err error
 
 	product, err = products.Usecases{}.GetProduct(productSku)
 	if err != nil {
-		return
+		return err
 	}
 
 	purchase.addPack(*product, productQuantity)
+
+	return nil
 }
 
 func createPreference(purchase *Purchase) (*mercadopago.Preference, error) {
@@ -46,6 +47,18 @@ func createPreference(purchase *Purchase) (*mercadopago.Preference, error) {
 	return &result, nil
 }
 
+func configurePayment(purchase *Purchase) error {
+	preference, err := createPreference(purchase)
+
+	if err != nil {
+		return err
+	}
+
+	purchase.createPayment(preference.InitPoint, preference.ID)
+
+	return nil
+}
+
 func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 	cart, err := carts.Usecases{}.GetCartById(userId)
 	if err != nil {
@@ -62,7 +75,11 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 	}
 
 	for productSku, cartItem := range cart.Items {
-		addProductToPurchase(&purchase, productSku, cartItem.Quantity)
+		err = addProductToPurchase(&purchase, productSku, cartItem.Quantity)
+
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	err = repository{}.SavePurchase(purchase)
@@ -79,13 +96,14 @@ func (u Usecases) BuyProduct(userId, productSku string) (*Purchase, error) {
 	}
 
 	addProductToPurchase(&purchase, productSku, 1)
-	preference, err := createPreference(&purchase)
-	log.Print(preference)
-
 	if err != nil {
 		return nil, err
 	}
-	//purchase.createPayment(preference.InitPoint, preference.ID)
+
+	configurePayment(&purchase)
+	if err != nil {
+		return nil, err
+	}
 
 	err = repository{}.SavePurchase(purchase)
 	if err != nil {

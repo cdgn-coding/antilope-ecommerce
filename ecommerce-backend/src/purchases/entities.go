@@ -23,21 +23,23 @@ type Purchase struct {
 	UserID    string    `json:"userId"`
 	Amount    float64   `json:"amount"`
 	Status    string    `json:"status"`
-	Payment   Payment   `json:"payment" gorm:"foreignKey:PurchaseID"`
-	Packs     []Pack    `json:"packs" gorm:"foreignKey:ID"`
+	Payment   Payment   `json:"payment"`
+	Packs     []Pack    `json:"packs"`
+	Invoices  []Invoice `json:"invoices"`
 	CreatedAt time.Time `json:"createdAt" gorm:"autoUpdateTime"`
 	UpdatedAt time.Time `json:"updatedAt" gorm:"autoCreateTime"`
 }
 
 type Payment struct {
-	PurchaseID            string `json:"purchaseId" gorm:"index"`
-	MercadoPagoURL        string `json:"mercadoPagoURL"`
-	MercadoPagoPreference string `json:"mercadoPagoPreference"`
+	ID               string `json:"id" gorm:"primaryKey"`
+	PurchaseID       string `json:"purchaseId" gorm:"index"`
+	MercadoPagoURL   string `json:"mercadoPagoURL"`
+	MercadoPagoOrder string `json:"mercadoPagoOrder,omitempty""`
 }
 
 type Pack struct {
 	ID         string           `json:"id" gorm:"primaryKey"`
-	PurchaseID string           `json:"purchaseId" gorm:"index"`
+	PurchaseID string           `json:"purchaseId"`
 	ProductSku string           `json:"productSku" gorm:"index"`
 	Product    products.Product `json:"product" gorm:"foreignKey:ProductSku"`
 	Quantity   int64            `json:"quantity"`
@@ -46,7 +48,7 @@ type Pack struct {
 
 type Invoice struct {
 	ID         string `json:"id" gorm:"primaryKey"`
-	PurchaseID string `json:"purchaseId" gorm:"index"`
+	PurchaseID string `json:"purchaseId" gorm:"foreignKey:PurchaseID"`
 }
 
 func (p Purchase) createPurchase(userId string) (Purchase, error) {
@@ -69,9 +71,8 @@ func (p Purchase) createPurchase(userId string) (Purchase, error) {
 func (purchase *Purchase) addPack(product products.Product, quantity int64) (Purchase, error) {
 	id, err := ksuid.NewRandom()
 	if err != nil {
-		return *purchase, err
+		return Purchase{}, err
 	}
-
 	packAmount := product.Price * float64(quantity)
 	pack := Pack{
 		ID:         id.String(),
@@ -89,10 +90,15 @@ func (purchase *Purchase) addPack(product products.Product, quantity int64) (Pur
 }
 
 func (purchase *Purchase) createPayment(mercadoPagoInitPoint, mercadoPagoPreference string) (Purchase, error) {
+	id, err := ksuid.NewRandom()
+	if err != nil {
+		return Purchase{}, err
+	}
+	purchase.Status = WAITING_PAYMENT
 	purchase.Payment = Payment{
-		PurchaseID:            purchase.ID,
-		MercadoPagoURL:        mercadoPagoInitPoint,
-		MercadoPagoPreference: mercadoPagoPreference,
+		ID:             id.String(),
+		PurchaseID:     purchase.ID,
+		MercadoPagoURL: mercadoPagoInitPoint,
 	}
 	return *purchase, nil
 }
