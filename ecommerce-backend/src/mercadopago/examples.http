@@ -1,6 +1,6 @@
 ### Create Preference
 POST https://api.mercadopago.com/checkout/preferences
-Authorization: Bearer APP_USR-6491737281676060-013022-c95490bfceeefabe879e3b0df82d96c4-327796928
+Authorization: Bearer AppToken
 
 {
     "items": [
@@ -15,12 +15,12 @@ Authorization: Bearer APP_USR-6491737281676060-013022-c95490bfceeefabe879e3b0df8
 
 ### Merchant Order
 GET https://api.mercadopago.com/merchant_orders/4066539434
-Authorization: Bearer APP_USR-6491737281676060-013022-c95490bfceeefabe879e3b0df82d96c4-327796928
+Authorization: Bearer AppToken
 
 ### Payment
 GET https://api.mercadopago.com/v1/payments/19886439539
-Authorization: Bearer APP_USR-6491737281676060-013022-c95490bfceeefabe879e3b0df82d96c4-327796928
+Authorization: Bearer AppToken
 
 ### Notification
 GET https://api.mercadolibre.com/collections/notifications/19886439539
-Authorization: Bearer APP_USR-6491737281676060-013022-c95490bfceeefabe879e3b0df82d96c4-327796928
+Authorization: Bearer AppToken
