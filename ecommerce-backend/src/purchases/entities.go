@@ -5,7 +5,6 @@ import (
 
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
 	"github.com/segmentio/ksuid"
-	"gorm.io/gorm"
 )
 
 type PurchaseStatus string
@@ -20,14 +19,13 @@ const (
 )
 
 type Purchase struct {
-	gorm.Model
 	ID        string    `json:"id" gorm:"primaryKey"`
 	UserID    string    `json:"userId"`
 	Amount    float64   `json:"amount"`
 	Status    string    `json:"status"`
 	Payment   Payment   `json:"payment"`
 	Packs     []Pack    `json:"packs"`
-	Invoices  []Invoice `json:"invoices"`
+	InvoiceID string    `json:"invoiceId"`
 	CreatedAt time.Time `json:"createdAt" gorm:"autoUpdateTime"`
 	UpdatedAt time.Time `json:"updatedAt" gorm:"autoCreateTime"`
 }
@@ -36,7 +34,7 @@ type Payment struct {
 	ID               string `json:"id" gorm:"primaryKey"`
 	PurchaseID       string `json:"purchaseId" gorm:"index"`
 	MercadoPagoURL   string `json:"mercadoPagoURL"`
-	MercadoPagoOrder string `json:"mercadoPagoOrder,omitempty"`
+	MercadoPagoOrder int64  `json:"mercadoPagoOrder,omitempty"`
 }
 
 type Pack struct {
@@ -46,11 +44,6 @@ type Pack struct {
 	Product    products.Product `json:"product" gorm:"foreignKey:ProductSku"`
 	Quantity   int64            `json:"quantity"`
 	Amount     float64          `json:"amount"`
-}
-
-type Invoice struct {
-	ID         string `json:"id" gorm:"primaryKey"`
-	PurchaseID string `json:"purchaseId" gorm:"foreignKey:PurchaseID"`
 }
 
 func (p Purchase) createPurchase(userId string) (Purchase, error) {
@@ -103,4 +96,9 @@ func (purchase *Purchase) createPayment(mercadoPagoInitPoint, mercadoPagoPrefere
 		MercadoPagoURL: mercadoPagoInitPoint,
 	}
 	return *purchase, nil
+}
+
+func (purchase *Purchase) completeWithMercadoPago(mercadopagoOrder int64) {
+	purchase.Status = COMPLETED
+	purchase.Payment.MercadoPagoOrder = mercadopagoOrder
 }

@@ -49,3 +49,17 @@ func CreateCartPurchase(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))
 }
+
+func ReceiveMercadoPagoNotification(w http.ResponseWriter, r *http.Request) {
+	topic := r.URL.Query().Get("topic")
+	id := r.URL.Query().Get("id")
+
+	err := Usecases{}.ReceiveMercadoPagoNotification(topic, id)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Errorf("Error processing purchase: %w", err).Error()))
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}

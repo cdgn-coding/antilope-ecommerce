@@ -82,7 +82,7 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 		}
 	}
 
-	err = repository{}.SavePurchase(purchase)
+	err = repository{}.CreatePurchase(purchase)
 	return &purchase, nil
 }
 
@@ -105,10 +105,39 @@ func (u Usecases) BuyProduct(userId, productSku string) (*Purchase, error) {
 		return nil, err
 	}
 
-	err = repository{}.SavePurchase(purchase)
+	err = repository{}.CreatePurchase(purchase)
 	if err != nil {
 		return nil, err
 	}
 
 	return &purchase, nil
+}
+
+func (u Usecases) ReceiveMercadoPagoNotification(topic, id string) error {
+	if topic != mercadopago.MERCHANT_ORDER {
+		return nil
+	}
+
+	order, err := mercadopago.GetMerchantOrder(id)
+
+	if err != nil {
+		return err
+	}
+
+	if !order.IsTotallyPaid() {
+		return nil
+	}
+
+	purchase, err := repository{}.GetPurchase(order.ExternalReference)
+	if err != nil {
+		return fmt.Errorf("Purchase not found. %w", err)
+	}
+	purchase.completeWithMercadoPago(order.Id)
+	err = repository{}.UpdatePurchase(purchase)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

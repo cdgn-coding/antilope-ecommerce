@@ -5,14 +5,18 @@ import (
 	"fmt"
 )
 
-const (
-	CLOSED  = "closed"
-	OPENED  = "opened"
-	EXPIRED = "expired"
-)
+var OrderStatus = struct {
+	CLOSED  string
+	OPENED  string
+	EXPIRED string
+}{
+	CLOSED:  "closed",
+	OPENED:  "opened",
+	EXPIRED: "expired",
+}
 
 type Order struct {
-	Id                string `json:"id"`
+	Id                int64  `json:"id"`
 	ExternalReference string `json:"external_reference"`
 	PreferenceId      string `json:"preference_id"`
 	OrderStatus       string `json:"order_status"`
@@ -20,10 +24,10 @@ type Order struct {
 }
 
 func (order *Order) IsTotallyPaid() bool {
-	return order.OrderStatus == CLOSED
+	return order.Status == OrderStatus.CLOSED
 }
 
-func GetOrder(orderId string) (Order, error) {
+func GetMerchantOrder(orderId string) (Order, error) {
 	resp, err := getRestclient().R().
 		Get(fmt.Sprintf("https://api.mercadopago.com/merchant_orders/%s", orderId))
 

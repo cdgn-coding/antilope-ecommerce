@@ -30,5 +30,6 @@ func main() {
 	r.Handle("/users/{id}/cart/items/{sku}", http.HandlerFunc(carts.PutProductQuantity)).Methods("PUT")
 	r.Handle("/users/{userId}/purchases/products/{productSku}", http.HandlerFunc(purchases.CreateProductPurchase)).Methods("POST")
 	r.Handle("/users/{userId}/purchases/cart", http.HandlerFunc(purchases.CreateCartPurchase)).Methods("POST")
+	r.Handle("/purchases/notifications/mercadopago", http.HandlerFunc(purchases.ReceiveMercadoPagoNotification)).Methods("POST")
 	log.Fatal(http.ListenAndServe(":3000", r))
 }
