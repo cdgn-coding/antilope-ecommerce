@@ -1,3 +1,6 @@
+ecommerce-backend/.env
+ecommerce-backend/.env.production
+
 # Logs
 logs
 *.log

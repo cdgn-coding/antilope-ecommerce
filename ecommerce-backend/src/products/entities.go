@@ -7,7 +7,7 @@ import (
 type Product struct {
 	Sku         string    `json:"sku" gorm:"primaryKey"`
 	Name        string    `json:"name"`
-	Price       int64     `json:"price"`
+	Price       float64   `json:"price"`
 	Description string    `json:"description"`
 	Category    string    `json:"category" gorm:"index"`
 	Stock       int64     `json:"stock"`

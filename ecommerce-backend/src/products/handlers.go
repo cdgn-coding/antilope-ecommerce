@@ -11,7 +11,7 @@ import (
 )
 
 func PutProduct(w http.ResponseWriter, r *http.Request) {
-	var product Product
+	var product *Product
 	var responseResult responses.Response
 	var err error
 	err = json.NewDecoder(r.Body).Decode(&product)
@@ -22,7 +22,8 @@ func PutProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseResult, err = usecases{}.SaveProduct(product)
+	product, err = Usecases{}.SaveProduct(*product)
+	responseResult = responses.Response{Data: product}
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(fmt.Errorf("Error processing product: %w", err).Error()))
@@ -38,13 +39,14 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sku := params["sku"]
 
-	responseResult, err := usecases{}.GetProduct(sku)
+	product, err := Usecases{}.GetProduct(sku)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(fmt.Errorf("Error getting product: %w", err).Error()))
 		return
 	}
 
+	responseResult := responses.Response{Data: product}
 	resultJson, _ := json.Marshal(responseResult)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))
@@ -56,7 +58,7 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 	category := r.URL.Query().Get("category")
 
 	page, err := strconv.Atoi(pageStr)
-	responseResult, err := usecases{}.SearchProducts(search, category, page)
+	responseResult, err := Usecases{}.SearchProducts(search, category, page)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte(fmt.Errorf("Error getting products: %w", err).Error()))
@@ -81,13 +83,14 @@ func PutProductImage(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseResult, err := usecases{}.AddImageToProduct(sku, file)
+	imageResult, err := Usecases{}.AddImageToProduct(sku, file)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(fmt.Errorf("Error adding image to Product: %w", err).Error()))
 		return
 	}
 
+	responseResult := responses.Response{Data: imageResult}
 	resultJson, _ := json.Marshal(responseResult)
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(resultJson))

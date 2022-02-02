@@ -6,6 +6,7 @@ import (
 
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/clients"
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
+	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/purchases"
 	"github.com/joho/godotenv"
 )
 
@@ -22,7 +23,11 @@ func main() {
 	}
 
 	log.Print("Automigrating...")
+	log.Print("Products...")
 	err = db.AutoMigrate(&products.Product{}, &products.Image{})
+
+	log.Print("Purchases...")
+	err = db.AutoMigrate(&purchases.Purchase{}, &purchases.Pack{}, &purchases.Payment{})
 
 	if err != nil {
 		log.Fatal(err)

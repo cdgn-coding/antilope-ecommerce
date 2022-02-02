@@ -11,7 +11,7 @@ type repository struct{}
 
 func (r repository) GetCartById(id string) (Cart, error) {
 	dynamodb := clients.GetDynamoDBClient()
-	table := os.Getenv("CARTS_DYNAMODB_TABLE")
+	table := os.Getenv("CARTS_DYNAMODB_TABLE_ID")
 	cart := Cart{}
 	err := dynamodb.Table(table).Get("Id", id).One(&cart)
 
@@ -24,7 +24,7 @@ func (r repository) GetCartById(id string) (Cart, error) {
 
 func (r repository) PutCart(cart Cart) error {
 	dynamodb := clients.GetDynamoDBClient()
-	table := os.Getenv("CARTS_DYNAMODB_TABLE")
+	table := os.Getenv("CARTS_DYNAMODB_TABLE_ID")
 	err := dynamodb.Table(table).Put(cart).Run()
 
 	if err != nil {

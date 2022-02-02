@@ -10,7 +10,7 @@ type Cart struct {
 }
 
 type CartItem struct {
-	Quantity int `json:"quantity"`
+	Quantity int64 `json:"quantity"`
 }
 
 func createCart(id string) Cart {

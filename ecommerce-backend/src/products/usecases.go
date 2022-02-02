@@ -11,41 +11,35 @@ import (
 	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
 )
 
-type usecases struct{}
+type Usecases struct{}
 
-func (u usecases) SaveProduct(product Product) (responses.Response, error) {
+func (u Usecases) SaveProduct(product Product) (*Product, error) {
 	if product.Sku == "" {
-		return responses.Response{}, errors.New("Sku is required")
+		return nil, errors.New("Sku is required")
 	}
 
 	err := repository{}.SaveProduct(product)
 	if err != nil {
-		return responses.Response{}, fmt.Errorf("Error creating product: %w", err)
+		return nil, fmt.Errorf("Error creating product: %w", err)
 	}
 
-	response := responses.Response{
-		Data: product,
-	}
-	return response, nil
+	return &product, nil
 }
 
-func (u usecases) GetProduct(sku string) (responses.Response, error) {
+func (u Usecases) GetProduct(sku string) (*Product, error) {
 	if sku == "" {
-		return responses.Response{}, errors.New("Sku is required")
+		return nil, errors.New("Sku is required")
 	}
 
 	product, err := repository{}.GetProduct(sku)
 	if err != nil {
-		return responses.Response{}, fmt.Errorf("Error fetching product: %w", err)
+		return nil, fmt.Errorf("Error fetching product: %w", err)
 	}
 
-	response := responses.Response{
-		Data: product,
-	}
-	return response, nil
+	return &product, nil
 }
 
-func (u usecases) SearchProducts(search, category string, page int) (responses.PaginatedResponse, error) {
+func (u Usecases) SearchProducts(search, category string, page int) (responses.PaginatedResponse, error) {
 	var product Product
 
 	if category != "" {
@@ -84,22 +78,20 @@ func (u usecases) SearchProducts(search, category string, page int) (responses.P
 	return response, nil
 }
 
-func (u usecases) AddImageToProduct(sku string, image io.ReadSeeker) (responses.Response, error) {
+func (u Usecases) AddImageToProduct(sku string, image io.ReadSeeker) (*Image, error) {
 	ksuid, err := ksuid.NewRandom()
 
 	if err != nil {
-		return responses.Response{}, fmt.Errorf("Error generating ksuid: %w", err)
+		return nil, fmt.Errorf("Error generating ksuid: %w", err)
 	}
 
 	fileKey := fmt.Sprintf("%s/%s.jpg", sku, ksuid.String())
 	err = uploadFileToS3(fileKey, image)
 	if err != nil {
-		return responses.Response{}, fmt.Errorf("Error uploading image: %w", err)
+		return nil, fmt.Errorf("Error uploading image: %w", err)
 	}
 
 	savedImage, err := repository{}.SaveImageToProduct(sku, ksuid.String())
 
-	response := responses.Response{Data: savedImage}
-
-	return response, nil
+	return &savedImage, nil
 }
