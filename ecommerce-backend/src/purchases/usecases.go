@@ -82,7 +82,16 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 		}
 	}
 
+	err = configurePayment(&purchase)
+	if err != nil {
+		return nil, err
+	}
+
 	err = repository{}.CreatePurchase(purchase)
+	if err != nil {
+		return nil, err
+	}
+
 	return &purchase, nil
 }
 
@@ -95,12 +104,12 @@ func (u Usecases) BuyProduct(userId, productSku string) (*Purchase, error) {
 		return nil, err
 	}
 
-	addProductToPurchase(&purchase, productSku, 1)
+	err = addProductToPurchase(&purchase, productSku, 1)
 	if err != nil {
 		return nil, err
 	}
 
-	configurePayment(&purchase)
+	err = configurePayment(&purchase)
 	if err != nil {
 		return nil, err
 	}
