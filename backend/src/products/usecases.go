@@ -8,7 +8,7 @@ import (
 
 	"github.com/segmentio/ksuid"
 
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/responses"
 )
 
 type Usecases struct{}

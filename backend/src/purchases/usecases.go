@@ -3,9 +3,9 @@ package purchases
 import (
 	"fmt"
 
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/carts"
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/mercadopago"
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/carts"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/mercadopago"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/products"
 )
 
 type Usecases struct{}

@@ -4,9 +4,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/clients"
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/purchases"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/clients"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/products"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/purchases"
 	"github.com/joho/godotenv"
 )
 
