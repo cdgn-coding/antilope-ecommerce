@@ -1,6 +1,0 @@
-docs/storybook-static
-docs/storybook-msw
-public
-.next
-node_modules
-coverage

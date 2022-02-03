@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-cd ecommerce-frontend
+cd frontend
 yarn run format:staged
