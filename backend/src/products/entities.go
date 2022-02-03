@@ -1,6 +1,9 @@
 package products
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
 	"time"
 )
 
@@ -19,4 +22,23 @@ type Product struct {
 type Image struct {
 	ID         string `json:"id" gorm:"primaryKey"`
 	ProductSku string `json:"productSku" gorm:"index"`
+}
+
+func (p Product) MarshalJSON() ([]byte, error) {
+	images := make([]string, len(p.Images))
+	baseUrl := os.Getenv("PRODUCTS_BUCKET_URL")
+	bucket := os.Getenv("PRODUCTS_BUCKET_ID")
+	for i, image := range p.Images {
+		images[i] = fmt.Sprintf("%s/%s/%s/%s.jpg", baseUrl, bucket, p.Sku, image.ID)
+	}
+
+	return json.Marshal(map[string]interface{}{
+		"sku":         p.Sku,
+		"name":        p.Name,
+		"price":       p.Price,
+		"description": p.Description,
+		"category":    p.Category,
+		"stock":       p.Stock,
+		"images":      images,
+	})
 }

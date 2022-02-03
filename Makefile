@@ -1,16 +1,16 @@
 format:
 	cd frontend && yarn run format:staged
 
-refresh:
-	cd infra && pulumi refresh
+refresh-infra:
+	cd infraestructure && pulumi refresh
 
-deploy:
-	cd infra && pulumi up
+deploy-infra:
+	cd infraestructure && pulumi up
 
-dev--frontend:
+dev-frontend:
 	cd frontend && yarn run dev
 
-dev--backend:
+dev-backend:
 	cd backend && go run ./cmd/server/main.go
 
 migrations:
@@ -18,3 +18,6 @@ migrations:
 
 data-factory:
 	cd tests && yarn run factory
+
+storybook:
+	cd frontend && yarn run storybook
