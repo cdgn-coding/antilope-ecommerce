@@ -5,11 +5,10 @@ name: Node.js CI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -17,14 +16,14 @@ jobs:
         node-version: [16.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
-        cache-dependency-path: './ecommerce-frontend/yarn.lock'
-    - run: yarn install
-      working-directory: ecommerce-frontend
-    - run: yarn test
-      working-directory: ecommerce-frontend
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "yarn"
+          cache-dependency-path: "./frontend/yarn.lock"
+      - run: yarn install
+        working-directory: frontend
+      - run: yarn test
+        working-directory: frontend
