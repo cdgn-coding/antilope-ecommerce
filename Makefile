@@ -7,10 +7,10 @@ refresh:
 deploy:
 	cd infra && pulumi up
 
-backend:
+dev--frontend:
 	cd frontend && yarn run dev
 
-backend:
+dev--backend:
 	cd backend && go run ./cmd/server/main.go
 
 migrations:
