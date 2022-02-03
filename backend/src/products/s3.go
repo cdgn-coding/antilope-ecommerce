@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/clients"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/clients"
 )
 
 func uploadFileToS3(key string, file io.ReadSeeker) error {

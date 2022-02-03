@@ -1,4 +1,4 @@
-module github.com/cdgn-coding/antilope-ecommerce/ecommece-backend
+module github.com/cdgn-coding/antilope-ecommerce/backend
 
 go 1.17
 

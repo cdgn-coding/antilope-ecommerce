@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/clients"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/clients"
 )
 
 type repository struct{}

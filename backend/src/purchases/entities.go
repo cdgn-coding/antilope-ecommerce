@@ -3,7 +3,7 @@ package purchases
 import (
 	"time"
 
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/products"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/products"
 	"github.com/segmentio/ksuid"
 )
 

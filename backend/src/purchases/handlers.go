@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/cdgn-coding/antilope-ecommerce/ecommece-backend/src/responses"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/responses"
 	"github.com/gorilla/mux"
 )
 
