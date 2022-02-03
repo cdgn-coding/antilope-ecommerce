@@ -1,5 +1,5 @@
-docs/storybook-static
-docs/storybook-msw
+frontend/docs/storybook-static
+frontend/docs/storybook-msw
 public
 .next
 node_modules
