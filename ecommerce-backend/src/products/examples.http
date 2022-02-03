@@ -1,23 +1,23 @@
 ### Create Product
-PUT http://localhost:3000/products/productId
+PUT http://localhost:8080/products/productId
 content-type: application/json
 
 {
-    "Name": "TV",
-    "Category": "Electronics",
-    "Sku": "productId",
-    "Price": 1.0,
-    "Stock": 10
+    "name": "TV",
+    "category": "Electronics",
+    "sku": "productId",
+    "price": 1.0,
+    "stock": 10
 }
 
 ### Get Product
-GET http://localhost:3000/products/productId
+GET http://localhost:8080/products/productId
 
 ### Search Products
-GET http://localhost:3000/products/
+GET http://localhost:8080/products/
 
 ### Add Image to Product
-POST http://localhost:3000/products/productId/images
+POST http://localhost:8080/products/productId/images
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW

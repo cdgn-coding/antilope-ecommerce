@@ -73,8 +73,14 @@ func SearchProducts(w http.ResponseWriter, r *http.Request) {
 func PutProductImage(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	sku := params["sku"]
-	// Get image bytes from body request
-	file, header, _ := r.FormFile("image")
+	file, header, err := r.FormFile("image")
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(fmt.Errorf("Image unavailable in request body: %w", err).Error()))
+		return
+	}
+
 	filetype := header.Header.Get("Content-Type")
 
 	if filetype != "image/jpeg" {

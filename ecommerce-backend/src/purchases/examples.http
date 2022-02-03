@@ -1,8 +1,8 @@
 ### Buy product
-POST http://localhost:3000/users/userId/purchases/products/productId
+POST http://localhost:8080/users/userId/purchases/products/productId
 
 ### Buy Cart
-POST http://localhost:3000/users/userId/purchases/cart
+POST http://localhost:8080/users/userId/purchases/cart
 
 ### MercadoPago Notification Order
-POST http://localhost:3000/purchases/notifications/mercadopago?topic=merchant_order&id=4070782165
+POST http://localhost:8080/purchases/notifications/mercadopago?topic=merchant_order&id=4070782165
