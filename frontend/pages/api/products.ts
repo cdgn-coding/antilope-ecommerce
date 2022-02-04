@@ -12,7 +12,6 @@ export default async function handler(
 ) {
   const { search, page, category } = req.query;
   const url = `${process.env.BACKEND_API_BASE_URL}/products?search=${search}&page=${page}&category=${category}`;
-  console.log(url);
   const response = await fetch(url);
   const json = await response.json();
   res.status(200).json(json);
