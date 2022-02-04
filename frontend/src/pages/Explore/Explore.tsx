@@ -3,18 +3,19 @@ import Layout from "@components/Layout";
 import styles from "./Explore.module.css";
 import useProducts from "@hooks/useProducts";
 import ProductCard from "@components/ProductCard";
-import Link from "@components/Link";
 import Pagination from "@components/Pagination";
 import { Product } from "@models/Product";
 import secondaryMenuItems from "@constants/secondaryMenu";
 import menuItems from "@constants/menuItems";
 
 const renderCard = (product: Product) => (
-  <Link key={Math.random()} href={`/products/${product.sku}`}>
-    <div className={styles.product} data-testid={`product-card-${product.sku}`}>
-      <ProductCard {...product} />
-    </div>
-  </Link>
+  <div
+    className={styles.product}
+    data-testid={`product-card-${product.sku}`}
+    key={Math.random()}
+  >
+    <ProductCard {...product} />
+  </div>
 );
 
 const Explore = () => {

@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/carts"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/clients"
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/products"
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/purchases"
 	"github.com/gorilla/mux"
@@ -20,6 +21,7 @@ func main() {
 	godotenv.Load()
 	log.SetOutput(os.Stdout)
 	log.Printf("Starting server. Environment: %s", os.Getenv("env"))
+	clients.StartGormClient()
 	r := mux.NewRouter()
 	r.HandleFunc("/ping", pingHandler)
 	r.Handle("/products/{sku}", http.HandlerFunc(products.PutProduct)).Methods("PUT")

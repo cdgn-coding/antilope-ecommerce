@@ -4,33 +4,19 @@ import (
 	"fmt"
 
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/clients"
-	"gorm.io/gorm"
 )
 
 type repository struct{}
 
 func (r repository) CreatePurchase(purchase Purchase) error {
-	var db *gorm.DB
-	var err error
-
-	db, err = clients.GetPostgresClient()
-	if err != nil {
-		return err
-	}
-
+	db := clients.GormClient
 	return db.Create(&purchase).Error
 }
 
 func (r repository) UpdatePurchase(purchase Purchase) error {
-	var db *gorm.DB
-	var err error
+	db := clients.GormClient
+	err := db.Model(&purchase.Payment).Updates(purchase.Payment).Error
 
-	db, err = clients.GetPostgresClient()
-	if err != nil {
-		return err
-	}
-
-	err = db.Model(&purchase.Payment).Updates(purchase.Payment).Error
 	if err != nil {
 		return fmt.Errorf("error updating payment: %w", err)
 	}
@@ -44,16 +30,9 @@ func (r repository) UpdatePurchase(purchase Purchase) error {
 }
 
 func (r repository) GetPurchase(id string) (Purchase, error) {
-	var db *gorm.DB
-	var err error
 	var purchase Purchase
-
-	db, err = clients.GetPostgresClient()
-	if err != nil {
-		return Purchase{}, err
-	}
-
-	err = db.Preload("Payment").
+	db := clients.GormClient
+	err := db.Preload("Payment").
 		Preload("Packs").
 		First(&purchase, "id = ?", id).
 		Error

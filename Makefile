@@ -21,3 +21,6 @@ data-factory:
 
 storybook:
 	cd frontend && yarn run storybook
+
+test:
+	cd frontend && yarn run test

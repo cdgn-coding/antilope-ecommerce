@@ -17,14 +17,12 @@ func main() {
 	log.Print("Setting up development database...")
 
 	log.Print("Connecting...")
-	db, err := clients.GetPostgresClient()
-	if err != nil {
-		log.Fatal(err)
-	}
+	clients.StartGormClient()
+	db := clients.GormClient
 
 	log.Print("Automigrating...")
 	log.Print("Products...")
-	err = db.AutoMigrate(&products.Product{}, &products.Image{})
+	err := db.AutoMigrate(&products.Product{}, &products.Image{})
 
 	log.Print("Purchases...")
 	err = db.AutoMigrate(&purchases.Purchase{}, &purchases.Pack{}, &purchases.Payment{})
