@@ -28,9 +28,9 @@ func (r repository) GetPurchasesByUserId(userId string, offset int, limit int) (
 		Preload("Payment").
 		Preload("Packs").
 		Where("user_id = ?", userId).
+		Find(&purchases).
 		Offset(offset).
 		Limit(limit).
-		Find(&purchases).
 		Error
 
 	return purchases, err

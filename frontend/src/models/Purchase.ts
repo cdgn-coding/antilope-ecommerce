@@ -19,7 +19,9 @@ export interface Payment {
 }
 
 export interface Pack {
+  id: string;
+  productSku: string;
   amount: number;
   quantity: number;
-  product: Product;
+  product?: Product;
 }
