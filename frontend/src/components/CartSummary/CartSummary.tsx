@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "@components/Button";
 import styles from "./CartSummary.module.css";
 
 export interface CartSummaryProps {
@@ -23,6 +24,7 @@ const CartSummary = ({ subtotal, shipment, total }: CartSummaryProps) => {
         <div className={styles.itemLabel}>Total</div>
         <div className={styles.itemValue}>$ {total}</div>
       </div>
+      <Button>Comprar</Button>
     </div>
   );
 };
