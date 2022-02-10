@@ -38,7 +38,7 @@ const renderPurchase = (purchase: Purchase) => {
 const Purchases = () => {
   const { push } = useRouter();
   const onSearch = (query: string) => push(`/?search=${query}`);
-  const { loading, data, page, totalPages, onNext, onPrevious } =
+  const { loading, isEmpty, data, page, totalPages, onNext, onPrevious } =
     usePurchases();
 
   return (
@@ -50,13 +50,18 @@ const Purchases = () => {
       loading={loading}
     >
       <div className={styles.container}>
-        {data?.map(renderPurchase)}
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          onNext={onNext}
-          onPrevious={onPrevious}
-        />
+        {isEmpty && <p>No tienes compras aún. ¿Que te gustaría comprar?</p>}
+        {!isEmpty && (
+          <React.Fragment>
+            {data?.map(renderPurchase)}
+            <Pagination
+              page={page}
+              totalPages={totalPages}
+              onNext={onNext}
+              onPrevious={onPrevious}
+            />
+          </React.Fragment>
+        )}
       </div>
     </Layout>
   );

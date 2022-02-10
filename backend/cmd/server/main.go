@@ -31,6 +31,7 @@ func main() {
 	r.Handle("/users/{id}/cart", http.HandlerFunc(carts.GetCart)).Methods("GET")
 	r.Handle("/users/{id}/cart/items/{sku}", http.HandlerFunc(carts.PutProductQuantity)).Methods("PUT")
 	r.Handle("/users/{id}/cart/items/{sku}", http.HandlerFunc(carts.DeleteProductFromCart)).Methods("DELETE")
+	r.Handle("/users/{userId}/purchases", http.HandlerFunc(purchases.ListPurchases)).Methods("GET")
 	r.Handle("/users/{userId}/purchases/products/{productSku}", http.HandlerFunc(purchases.CreateProductPurchase)).Methods("POST")
 	r.Handle("/users/{userId}/purchases/cart", http.HandlerFunc(purchases.CreateCartPurchase)).Methods("POST")
 	r.Handle("/purchases/notifications/mercadopago", http.HandlerFunc(purchases.ReceiveMercadoPagoNotification)).Methods("POST")

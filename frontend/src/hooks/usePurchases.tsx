@@ -15,6 +15,7 @@ const fetchPurchases = async (page: number): Promise<GetPurchasesResponse> => {
 
 type usePurchasesHook = {
   loading: boolean;
+  isEmpty: boolean;
   onNext: () => void;
   onPrevious: () => void;
 } & GetPurchasesResponse;
@@ -38,7 +39,9 @@ const useProduct = (): usePurchasesHook => {
     fetchPurchasesEffect();
   }, []);
 
-  return { ...purchasesResponse, loading, onNext, onPrevious };
+  const isEmpty = !loading && purchasesResponse?.totalItems === 0;
+
+  return { ...purchasesResponse, isEmpty, loading, onNext, onPrevious };
 };
 
 export default useProduct;
