@@ -28,3 +28,8 @@ func (cart Cart) AddProduct(sku string, cartItem CartItem) Cart {
 	cart.UpdatedAt = time.Now()
 	return cart
 }
+
+func (cart *Cart) RemoveProduct(sku string) {
+	delete(cart.Items, sku)
+	cart.UpdatedAt = time.Now()
+}

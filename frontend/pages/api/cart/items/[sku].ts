@@ -1,23 +1,32 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import fetch from "cross-fetch";
-
-type Data = {
-  name: string;
-};
+import PutProductToCart from "src/services/cart/PutProductToCart";
+import { Cart } from "@models/Cart";
+import { Response } from "@models/Response";
+import DeleteProductFromCart from "src/services/cart/DeleteProductFromCart";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Response<Cart>>
 ) {
-  const sku = req.query.sku;
+  const sku = req.query.sku as string;
   const userId = "fakeUserId";
-  const url = `${process.env.BACKEND_API_BASE_URL}/users/${userId}/cart/items/${sku}`;
-  const body = JSON.stringify(req.body);
-  const headers = {
-    "Content-Type": "application/json",
-  };
-  const response = await fetch(url, { method: "PUT", body, headers });
-  const json = await response.json();
-  res.status(200).json(json);
+
+  switch (req.method) {
+    case "PUT": {
+      const quantity = Number(req.body.quantity);
+      const json = await PutProductToCart(userId, sku, quantity);
+      res.status(200).json(json);
+      break;
+    }
+    case "DELETE": {
+      const json = await DeleteProductFromCart(userId, sku);
+      res.status(200).json(json);
+      break;
+    }
+    default: {
+      res.status(405).end();
+      break;
+    }
+  }
 }

@@ -14,7 +14,7 @@ const changeProductQuantity = async (
   sku: string,
   quantity: number
 ): Promise<CartResponse> => {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/${sku}`;
+  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/items/${sku}`;
   const headers = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -25,13 +25,14 @@ const changeProductQuantity = async (
 };
 
 const removeProductFromCart = async (sku: string): Promise<CartResponse> => {
-  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/${sku}`;
+  const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/cart/items/${sku}`;
   const response = await fetch(url, { method: "DELETE" });
   return await response.json();
 };
 
 type useCartHook = () => {
   loading: boolean;
+  isEmpty: boolean;
   changesLoading: boolean;
   onChangeQuantity: (sku: string, quantity: number) => void;
   onRemoveProduct: (sku: string) => void;
@@ -66,8 +67,11 @@ const useCart: useCartHook = () => {
     setChangesLoading(false);
   };
 
+  const isEmpty = cartResponse?.error || cartResponse.data?.items?.length === 0;
+
   return {
     ...cartResponse,
+    isEmpty,
     loading,
     changesLoading,
     onRemoveProduct,

@@ -14,7 +14,7 @@ dev-backend:
 	cd backend && go run ./cmd/server/main.go
 
 migrations:
-	go run backend/cmd/migrations/main.go
+	cd backend && go run ./cmd/migrations/main.go
 
 data-factory:
 	cd tests && yarn run factory

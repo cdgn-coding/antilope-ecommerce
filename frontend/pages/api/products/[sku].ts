@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import fetch from "cross-fetch";
+import GetProductBySKU from "src/services/product/GetProductBySKU";
 
 type Data = {
   name: string;
@@ -10,9 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const sku = req.query.sku;
-  const url = `${process.env.BACKEND_API_BASE_URL}/products/${sku}`;
-  const response = await fetch(url);
-  const json = await response.json();
-  res.status(200).json(json);
+  const sku = req.query.sku as string;
+  const productResponse = await GetProductBySKU(sku);
+  res.status(200).json(productResponse as Data);
 }
