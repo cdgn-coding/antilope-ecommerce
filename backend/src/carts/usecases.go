@@ -2,6 +2,10 @@ package carts
 
 type Usecases struct{}
 
+func (u Usecases) DeleteCart(id string) error {
+	return repository{}.DeleteCart(id)
+}
+
 func (u Usecases) GetCartById(id string) (Cart, error) {
 	cart, err := repository{}.GetCartById(id)
 	return cart, err

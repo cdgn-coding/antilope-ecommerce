@@ -9,6 +9,18 @@ import (
 
 type repository struct{}
 
+func (r repository) DeleteCart(id string) error {
+	dynamodb := clients.GetDynamoDBClient()
+	table := os.Getenv("CARTS_DYNAMODB_TABLE_ID")
+	err := dynamodb.Table(table).Delete("Id", id).Run()
+
+	if err != nil {
+		return fmt.Errorf("Error while deleting Cart %w", err)
+	}
+
+	return nil
+}
+
 func (r repository) GetCartById(id string) (Cart, error) {
 	dynamodb := clients.GetDynamoDBClient()
 	table := os.Getenv("CARTS_DYNAMODB_TABLE_ID")

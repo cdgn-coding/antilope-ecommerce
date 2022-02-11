@@ -3,6 +3,7 @@ import styles from "./Button.module.css";
 
 export interface ButtonProps {
   type?: "primary" | "secondary" | "disabled";
+  className?: string;
   children?: React.ReactNode;
   onClick?: () => void;
   size?: "small" | "medium" | "large";
@@ -11,6 +12,7 @@ export interface ButtonProps {
 const Button = ({
   type = "primary",
   size = "small",
+  className = "",
   children,
   onClick,
 }: ButtonProps) => {
@@ -19,7 +21,7 @@ const Button = ({
 
   return (
     <button
-      className={`${styles.button} ${typeClass} ${sizeClass}`}
+      className={`${styles.button} ${typeClass} ${sizeClass} ${className}`}
       onClick={onClick}
     >
       {children}

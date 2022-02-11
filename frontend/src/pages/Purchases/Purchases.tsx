@@ -20,7 +20,8 @@ const PurchaseCardComponentFactory = (purchase: Purchase) =>
           status={purchase.status}
           createdAt={purchase.createdAt}
           invoiceUrl={purchase.invoiceUrl}
-          key={pack.product.sku}
+          mercadoPagoURL={purchase?.payment?.mercadoPagoURL}
+          key={pack?.product?.sku}
         />
       </div>
     );

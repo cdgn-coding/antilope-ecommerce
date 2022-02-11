@@ -123,6 +123,8 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 		return nil, err
 	}
 
+	carts.Usecases{}.DeleteCart(userId)
+
 	return &purchase, nil
 }
 
