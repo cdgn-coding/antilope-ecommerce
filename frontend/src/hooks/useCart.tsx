@@ -67,7 +67,9 @@ const useCart: useCartHook = () => {
     setChangesLoading(false);
   };
 
-  const isEmpty = cartResponse?.error || cartResponse.data?.items?.length === 0;
+  const isEmpty = Boolean(
+    cartResponse?.error || cartResponse.data?.items?.length === 0
+  );
 
   return {
     ...cartResponse,

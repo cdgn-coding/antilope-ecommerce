@@ -3,7 +3,7 @@ import fetch from "cross-fetch";
 import { Product } from "@models/Product";
 import { Category, Categories } from "@models/Category";
 import { PaginatedResponse } from "@models/PaginatedResponse";
-import { useRouter } from "next/router";
+import useRouter from "@hooks/useRouter";
 
 type SearchProductsResponse = PaginatedResponse<Product>;
 
@@ -36,7 +36,6 @@ const useProducts: useProductsHook = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<Category>(Categories.ALL);
   const [page, setPage] = useState(1);
-  const [mounted, setMounted] = useState(false);
 
   const onNext = useCallback(() => setPage(page + 1), [page]);
   const onPrevious = useCallback(() => setPage(page - 1), [page]);
@@ -63,7 +62,6 @@ const useProducts: useProductsHook = () => {
     setCategory(initialCategory);
     setSearch(initialSearch);
     setPage(initialPage);
-    setMounted(true);
   }, [query]);
 
   useEffect(() => {
@@ -78,7 +76,7 @@ const useProducts: useProductsHook = () => {
       }
     };
 
-    mounted && fetchProductsEffect();
+    fetchProductsEffect();
   }, [search, page, category]);
 
   return {
