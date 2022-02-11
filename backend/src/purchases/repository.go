@@ -28,6 +28,7 @@ func (r repository) GetPurchasesByUserId(userId string, offset int, limit int) (
 		Preload("Payment").
 		Preload("Packs").
 		Where("user_id = ?", userId).
+		Order("created_at desc").
 		Find(&purchases).
 		Offset(offset).
 		Limit(limit).

@@ -8,6 +8,7 @@ import ProductSelector from "@components/ProductSelector";
 import { CartItem } from "@models/Cart";
 import CartSummary from "@components/CartSummary";
 import useRouter from "@hooks/useRouter";
+import useBuy from "@hooks/useBuy";
 
 const Cart = () => {
   const {
@@ -18,6 +19,7 @@ const Cart = () => {
     onChangeQuantity,
     onRemoveProduct,
   } = useCart();
+  const { onBuyCart } = useBuy();
   const { push } = useRouter();
   const onSearch = (query: string) => push(`/?search=${query}`);
   const renderCartItems = ({ product, quantity }: CartItem) => (
@@ -60,6 +62,7 @@ const Cart = () => {
                     total={data?.total}
                     subtotal={data?.subtotal}
                     shipment={data?.shipment}
+                    onBuy={onBuyCart}
                   />
                 </div>
               </div>

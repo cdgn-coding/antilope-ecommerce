@@ -18,9 +18,10 @@ const ProductDetail = ({ sku }: ProductDetailProps) => {
   const { push } = useRouter();
   const onSearch = (query: string) => push(`/?search=${query}`);
   const { loading, data } = useProduct(sku);
-  const { onBuyProduct } = useBuy(sku);
+  const { onBuyProduct } = useBuy();
   const { onAddProductToCart } = useAddToCart();
   const onAddToCart = React.useCallback(() => onAddProductToCart(sku), [sku]);
+  const onBuy = React.useCallback(() => onBuyProduct(sku), [sku]);
   return (
     <Layout
       menuItems={menuItems}
@@ -38,7 +39,7 @@ const ProductDetail = ({ sku }: ProductDetailProps) => {
             {data && (
               <ProductSummary
                 {...data}
-                onBuy={onBuyProduct}
+                onBuy={onBuy}
                 onAddToCart={onAddToCart}
               />
             )}
