@@ -7,11 +7,11 @@ services:
       - AWS_DEFAULT_REGION=us-east-1
       - EDGE_PORT=4566
       - SERVICES=dynamodb,s3
+      - DATA_DIR=/tmp/localstack/data
     ports:
       - "4566-4583:4566-4583"
     volumes:
-      - "${TEMPDIR:-/tmp/localstack}:/tmp/localstack"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "localstack-vol:/tmp/localstack"
   postgres:
     image: postgres
     environment:
@@ -20,3 +20,5 @@ services:
       - POSTGRES_DB=antilope
     ports:
       - 5432:5432
+volumes:
+  localstack-vol: #//d/Misc/Containers/Antilope

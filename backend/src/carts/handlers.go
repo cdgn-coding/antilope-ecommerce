@@ -8,6 +8,24 @@ import (
 	"github.com/gorilla/mux"
 )
 
+func DeleteProductFromCart(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id := params["id"]
+	sku := params["sku"]
+	cart, err := Usecases{}.DeleteProductFromCart(id, sku)
+
+	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	response := responses.Response{Data: cart}
+	responseJson, _ := json.Marshal(response)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(responseJson))
+}
+
 func GetCart(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id := params["id"]

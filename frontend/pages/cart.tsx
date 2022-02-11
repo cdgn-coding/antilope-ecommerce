@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Explore from "@pages/Explore";
+import Cart from "@pages/Cart";
 
-const Home: NextPage = () => {
+const CartPage: NextPage = () => {
   return (
     <>
       <Head>
@@ -14,9 +14,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Explore />
+      <Cart />
     </>
   );
 };
 
-export default Home;
+export default CartPage;

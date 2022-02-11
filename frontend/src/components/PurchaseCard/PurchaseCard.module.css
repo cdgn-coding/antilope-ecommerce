@@ -24,3 +24,7 @@
   justify-content: space-between;
   flex-grow: 1;
 }
+
+.payButton {
+  margin-left: 8px;
+}

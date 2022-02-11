@@ -2,13 +2,44 @@ package purchases
 
 import (
 	"fmt"
+	"math"
 
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/carts"
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/mercadopago"
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/products"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/responses"
 )
 
 type Usecases struct{}
+
+func (u Usecases) GetPurchases(userId string, page int) (responses.PaginatedResponse, error) {
+	if page == 0 {
+		page = 1
+	}
+
+	limit := 15
+	offset := page * limit
+	purchases, err := repository{}.GetPurchasesByUserId(userId, offset, limit)
+
+	if err != nil {
+		return responses.PaginatedResponse{}, err
+	}
+
+	totalItems, err := repository{}.GetTotalPurchasesByUserId(userId)
+	if err != nil {
+		return responses.PaginatedResponse{}, fmt.Errorf("Error counting products: %w", err)
+	}
+	totalPages := math.Ceil(float64(totalItems) / float64(limit))
+
+	response := responses.PaginatedResponse{
+		Data:       purchases,
+		Page:       int64(page),
+		TotalPages: int64(totalPages),
+		TotalItems: totalItems,
+	}
+
+	return response, nil
+}
 
 func addProductToPurchase(purchase *Purchase, productSku string, productQuantity int64) error {
 	var product *products.Product
@@ -91,6 +122,8 @@ func (u Usecases) BuyCart(userId string) (*Purchase, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	carts.Usecases{}.DeleteCart(userId)
 
 	return &purchase, nil
 }

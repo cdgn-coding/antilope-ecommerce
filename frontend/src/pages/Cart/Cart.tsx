@@ -8,13 +8,20 @@ import ProductSelector from "@components/ProductSelector";
 import { CartItem } from "@models/Cart";
 import CartSummary from "@components/CartSummary";
 import useRouter from "@hooks/useRouter";
+import useBuy from "@hooks/useBuy";
 
 const Cart = () => {
-  const { loading, data, changesLoading, onChangeQuantity, onRemoveProduct } =
-    useCart();
+  const {
+    loading,
+    isEmpty,
+    data,
+    changesLoading,
+    onChangeQuantity,
+    onRemoveProduct,
+  } = useCart();
+  const { onBuyCart } = useBuy();
   const { push } = useRouter();
   const onSearch = (query: string) => push(`/?search=${query}`);
-
   const renderCartItems = ({ product, quantity }: CartItem) => (
     <div
       className={styles.cartItem}
@@ -40,22 +47,28 @@ const Cart = () => {
       loading={loading}
     >
       <div className={styles.container}>
-        <div className={styles.column}>
-          <div className={styles.innerContent}>
-            {data?.items.map(renderCartItems)}
-          </div>
-        </div>
-        <div className={styles.column}>
-          <div className={styles.innerContent}>
-            <div className={styles.cartSummary} data-testid="cart-summary">
-              <CartSummary
-                total={data?.total}
-                subtotal={data?.subtotal}
-                shipment={data?.shipment}
-              />
+        {isEmpty && <p>No hay productos en tu carrito.</p>}
+        {!isEmpty && (
+          <React.Fragment>
+            <div className={styles.column}>
+              <div className={styles.innerContent}>
+                {data?.items.map(renderCartItems)}
+              </div>
             </div>
-          </div>
-        </div>
+            <div className={styles.column}>
+              <div className={styles.innerContent}>
+                <div className={styles.cartSummary} data-testid="cart-summary">
+                  <CartSummary
+                    total={data?.total}
+                    subtotal={data?.subtotal}
+                    shipment={data?.shipment}
+                    onBuy={onBuyCart}
+                  />
+                </div>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
       </div>
     </Layout>
   );

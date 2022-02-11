@@ -8,10 +8,20 @@ export interface Purchase {
   packs: Pack[];
   createdAt: string;
   invoiceUrl?: string;
+  payment?: Payment;
+}
+
+export interface Payment {
+  id: string;
+  purchaseId: string;
+  mercadoPagoURL: string;
+  mercadoPagoOrder: string;
 }
 
 export interface Pack {
+  id: string;
+  productSku: string;
   amount: number;
   quantity: number;
-  product: Product;
+  product?: Product;
 }

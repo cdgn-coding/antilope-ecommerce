@@ -9,11 +9,12 @@ import { DateTime } from "luxon";
 
 export interface PurchaseCardProps {
   quantity: number;
-  product: Product;
+  product?: Product;
   amount: number;
   status: PurchaseStatus;
   createdAt: string;
   invoiceUrl?: string;
+  mercadoPagoURL?: string;
 }
 
 type StatusStringMap = Record<PurchaseStatus, string>;
@@ -42,8 +43,9 @@ const PurchaseCard = ({
   status,
   createdAt,
   invoiceUrl,
+  mercadoPagoURL = "",
 }: PurchaseCardProps) => {
-  const image = product.images[0];
+  const image = product?.images[0] ?? "";
   const formattedDate = formatDate(createdAt);
 
   const hasInvoice = status === PurchaseStatus.DOCUMENTED && invoiceUrl;
@@ -54,7 +56,7 @@ const PurchaseCard = ({
         <Image src={image} layout="fill" />
       </div>
       <div className={styles.infoContainer}>
-        <div className={styles.productName}>{product.name}</div>
+        <div className={styles.productName}>{product?.name}</div>
         <div className={styles.purchaseDetail}>
           {quantity} u. por $ {amount}
         </div>
@@ -67,6 +69,11 @@ const PurchaseCard = ({
           )}
           {!hasInvoice && (
             <Button type="disabled">{statusNameMap[status]}</Button>
+          )}
+          {status === PurchaseStatus.WAITING_PAYMENT && (
+            <Link href={mercadoPagoURL}>
+              <Button className={styles.payButton}>Pagar</Button>
+            </Link>
           )}
         </div>
       </div>

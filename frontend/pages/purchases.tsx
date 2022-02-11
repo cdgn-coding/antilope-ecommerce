@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Explore from "@pages/Explore";
+import Purchases from "@pages/Purchases";
 
-const Home: NextPage = () => {
+const PurchasesPage: NextPage = () => {
   return (
     <>
       <Head>
@@ -14,9 +14,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Explore />
+      <Purchases />
     </>
   );
 };
 
-export default Home;
+export default PurchasesPage;

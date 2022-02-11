@@ -3,6 +3,7 @@ import fetch from "cross-fetch";
 import { Product } from "@models/Product";
 import { Category, Categories } from "@models/Category";
 import { PaginatedResponse } from "@models/PaginatedResponse";
+import useRouter from "@hooks/useRouter";
 
 type SearchProductsResponse = PaginatedResponse<Product>;
 
@@ -28,6 +29,7 @@ type useProductsHook = () => {
 } & PaginatedResponse<Product>;
 
 const useProducts: useProductsHook = () => {
+  const { query } = useRouter();
   const [data, setData] = useState<SearchProductsResponse>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
@@ -51,6 +53,16 @@ const useProducts: useProductsHook = () => {
     setCategory(Categories.ALL);
     setPage(1);
   };
+
+  useEffect(() => {
+    const initialCategory = (query?.category as Category) || Categories.ALL;
+    const initialSearch = (query?.search as string) || "";
+    const initialPage = Number(query?.page) || 1;
+
+    setCategory(initialCategory);
+    setSearch(initialSearch);
+    setPage(initialPage);
+  }, [query]);
 
   useEffect(() => {
     const fetchProductsEffect = async () => {

@@ -4,10 +4,30 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/responses"
 	"github.com/gorilla/mux"
 )
+
+func ListPurchases(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	userId := params["userId"]
+	pageStr := r.URL.Query().Get("page")
+
+	page, err := strconv.Atoi(pageStr)
+	responseResult, err := Usecases{}.GetPurchases(userId, page)
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(fmt.Errorf("Error processing purchase: %w", err).Error()))
+		return
+	}
+
+	resultJson, _ := json.Marshal(responseResult)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(resultJson))
+}
 
 func CreateProductPurchase(w http.ResponseWriter, r *http.Request) {
 	var purchase *Purchase

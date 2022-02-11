@@ -6,3 +6,6 @@ POST http://localhost:8080/users/userId/purchases/cart
 
 ### MercadoPago Notification Order
 POST http://localhost:8080/purchases/notifications/mercadopago?topic=merchant_order&id=4070782165
+
+### Search purchases
+GET http://localhost:8080/users/fakeUserId/purchases?page=1

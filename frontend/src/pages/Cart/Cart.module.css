@@ -14,3 +14,11 @@
   border: 1px solid #ccc;
   border-radius: 8px;
 }
+
+.cartItem {
+  margin-bottom: 12px;
+}
+
+.cartItem:last-child {
+  margin-bottom: 0;
+}
