@@ -13,3 +13,5 @@ export const eksCluster = new eks.Cluster("eks", {
   nodeAssociatePublicIpAddress: false,
   tags,
 });
+
+export const kubeconfig = eksCluster.kubeconfig;

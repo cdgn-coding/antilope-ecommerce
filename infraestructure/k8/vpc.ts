@@ -8,7 +8,7 @@ export const vpc = new awsx.ec2.Vpc(
   name,
   {
     cidrBlock: "172.16.0.0/16",
-    numberOfAvailabilityZones: "all",
+    numberOfAvailabilityZones: 2,
     tags,
   },
   // See https://github.com/pulumi/pulumi-eks/issues/271

@@ -1,2 +1,2 @@
 export { vpc } from "./vpc";
-export { eksCluster } from "./eks";
+export { eksCluster, kubeconfig } from "./eks";
