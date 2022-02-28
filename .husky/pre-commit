@@ -3,3 +3,6 @@
 
 cd frontend
 yarn run format:staged
+
+cd ../infrastructure
+yarn run format:staged

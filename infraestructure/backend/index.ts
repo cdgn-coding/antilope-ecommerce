@@ -9,5 +9,4 @@ export const dbConnection = {
   port: rdsCluster.port.apply((port) => port.toString()),
   username: rdsCluster.masterUsername,
   password: dbPassword,
-  database: "test",
 };

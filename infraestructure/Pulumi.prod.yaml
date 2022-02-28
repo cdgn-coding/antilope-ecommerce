@@ -1,3 +1,4 @@
 config:
+  aws:region: us-east-1
   ecommerce-infraestructure:dbPassword:
     secure: AAABADSZDlVwI9yI1XuzIukvT0HfbwQo2QBN42WQ4U5ittnK7BBXbt7RfmDfx2ZxE65k
