@@ -4,5 +4,7 @@
 cd frontend
 yarn run format:staged
 
-cd ../infrastructure
+cd ..
+ls
+cd infraestructure
 yarn run format:staged
