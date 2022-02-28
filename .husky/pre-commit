@@ -3,3 +3,8 @@
 
 cd frontend
 yarn run format:staged
+
+cd ..
+ls
+cd infraestructure
+yarn run format:staged

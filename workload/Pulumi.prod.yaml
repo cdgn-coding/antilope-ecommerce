@@ -1,0 +1,3 @@
+config:
+  aws:region: us-east-1
+  workload:clusterStackRef: cdgn_pulumi_1/ecommerce-infraestructure/prod
