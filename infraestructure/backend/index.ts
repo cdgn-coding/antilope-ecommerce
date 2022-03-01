@@ -10,3 +10,4 @@ export const dbConnection = {
   username: rdsCluster.masterUsername,
   password: dbPassword,
 };
+export { containerRepository } from "./containerRepository";
