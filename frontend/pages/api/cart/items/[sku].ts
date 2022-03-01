@@ -4,13 +4,16 @@ import PutProductToCart from "src/services/cart/PutProductToCart";
 import { Cart } from "@models/Cart";
 import { Response } from "@models/Response";
 import DeleteProductFromCart from "src/services/cart/DeleteProductFromCart";
+import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Response<Cart>>
 ) {
   const sku = req.query.sku as string;
-  const userId = "fakeUserId";
+  // @ts-ignore
+  const { user } = getSession(req, res);
+  const userId = user?.sub;
 
   switch (req.method) {
     case "PUT": {
@@ -30,3 +33,5 @@ export default async function handler(
     }
   }
 }
+
+export default withApiAuthRequired(handler);
