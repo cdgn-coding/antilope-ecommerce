@@ -8,8 +8,19 @@ const useAddToCart = () => {
     const headers = {
       "Content-Type": "application/json",
     };
-    await fetch(url, { method: "PUT", body, headers });
-    push("/cart");
+
+    const response = await fetch(url, { method: "PUT", body, headers });
+    switch (response.status) {
+      case 200: {
+        push("/cart");
+        break;
+      }
+      case 401: {
+        const pathname = document.location.pathname;
+        push(`/api/auth/login?returnTo=${encodeURIComponent(pathname)}`);
+        break;
+      }
+    }
   };
 
   return { onAddProductToCart };
