@@ -10,7 +10,7 @@ export interface DemoAppArgs {
   imageName: pulumi.Input<string>;
 }
 
-export class App extends pulumi.ComponentResource {
+export default class Backend extends pulumi.ComponentResource {
   // @ts-ignore
   public readonly imageName: pulumi.Output<string>;
   // @ts-ignore
@@ -29,7 +29,7 @@ export class App extends pulumi.ComponentResource {
     args: DemoAppArgs,
     opts: pulumi.ComponentResourceOptions = {}
   ) {
-    super("demo-app", name, args, opts);
+    super("antilope-backend", name, args, opts);
 
     // Create a Secret from the DB connection information.
     const dbConnSecret = new kx.Secret(
@@ -54,12 +54,13 @@ export class App extends pulumi.ComponentResource {
       const pass = data["password"];
       const db = data["database"];
       return <EnvMap>{
-        PGHOST: host,
-        PGPORT: port,
-        PGUSER: user,
-        PGPASSWORD: pass,
-        PGDATABASE: db,
-        SQLALCHEMY_DATABASE_URI: `postgresql+psycopg2://${user}:${pass}@${host}:${port}/${db}`,
+        HOST: ":8080",
+        POSTGRES_DSN: `postgres://${user}:${pass}@${host}:${port}/${db}`,
+        PRODUCTS_BUCKET_ID: config.productsBucketId,
+        PRODUCTS_BUCKET_URL: `http://${config.productsBucketDomain}`,
+        CARTS_DYNAMODB_TABLE_ID: config.cartTableId,
+        MERCADOPAGO_PUBLIC_KEY: config.mercadopagoPublicKey,
+        MERCADOPAGO_ACCESS_TOKEN: config.mercadopagoAccessToken,
       };
     });
 
@@ -68,10 +69,17 @@ export class App extends pulumi.ComponentResource {
       containers: [
         {
           env,
+          name: "antilope-backend",
           image: args.imageName,
           imagePullPolicy: "Always",
           resources: { requests: { cpu: "128m", memory: "128Mi" } },
-          ports: { http: 5050 },
+          ports: { http: 8080 },
+          livenessProbe: {
+            httpGet: {
+              path: "/ping",
+              port: 8080,
+            },
+          },
         },
       ],
     });

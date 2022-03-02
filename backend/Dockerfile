@@ -11,7 +11,8 @@ RUN go mod download
 COPY ./ ./
 
 RUN go build -o /server cmd/server/main.go
+RUN go build -o /migrations cmd/migrations/main.go
 
 EXPOSE 8080
 
-CMD [ "/server" ]
+CMD "/migrations"; "/server"

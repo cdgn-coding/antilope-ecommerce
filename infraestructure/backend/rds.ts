@@ -14,8 +14,10 @@ export const rdsSubnets = new aws.rds.SubnetGroup(`${name}-subnets`, {
   subnetIds: vpc.privateSubnetIds, // Same subnets as EKS nodes.
 });
 
+export const databaseName = "pulumi";
+
 export const rdsCluster = new aws.rds.Cluster(`${name}-cluster`, {
-  databaseName: "pulumi",
+  databaseName,
   dbSubnetGroupName: rdsSubnets.id,
   engine: "aurora-postgresql",
   engineVersion: "11.6",
@@ -33,4 +35,5 @@ export const instance = new aws.rds.ClusterInstance(name, {
   engineVersion: "11.6",
   instanceClass: "db.t2.micro",
   tags: tags,
+  publiclyAccessible: true,
 });

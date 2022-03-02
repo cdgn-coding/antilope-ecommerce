@@ -21,7 +21,7 @@ export const productsBucketPolicy = new aws.s3.BucketPolicy(
           "s3:GetObject"
         ],
         "Effect": "Allow",
-        "Resource": "arn:aws:s3:::${productsBucketName}",
+        "Resource": "${productsBucket.arn}/*",
         "Principal": "*"
       }
     ]

@@ -1,3 +1,7 @@
 config:
   aws:region: us-east-1
   workload:clusterStackRef: cdgn_pulumi_1/ecommerce-infraestructure/prod
+  workload:mercadopagoAccessToken:
+    secure: AAABAIl286NjmozPcZ0NsjDbo5eQ/x1MU6ttnr4XqEdF50s1smK4jDAUm+j0uyK7qQkm+BrHVnYbVJ85FazQN9wY8ktHlMikaBKvE6vRWaTaIePicr5WdcdR1LIAhgDWo0jqQTh7gNXnUw==
+  workload:mercadopagoPublicKey:
+    secure: AAABAJ650BVienRUgreDf3xLiDPQt8uKavbI0GM5ArlH2orp2pCYGB4D3wkEXTFluJl4DMj2kIx00jPx/dob5iR9RaFe7OXyKA9HHw==
