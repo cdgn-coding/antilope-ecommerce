@@ -18,4 +18,5 @@ export const config = {
   mercadopagoPublicKey: pulumiConfig.requireSecret("mercadopagoPublicKey"),
   mercadopagoAccessToken: pulumiConfig.requireSecret("mercadopagoAccessToken"),
   appsNamespaceName: clusterStackRef.getOutput("appsNamespaceName"),
+  awsRegion: pulumiConfig.require("aws-region"),
 };

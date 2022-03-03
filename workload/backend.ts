@@ -54,10 +54,12 @@ export default class Backend extends pulumi.ComponentResource {
       const pass = data["password"];
       const db = data["database"];
       return <EnvMap>{
+        env: "prod",
         HOST: ":8080",
-        POSTGRES_DSN: `postgres://${user}:${pass}@${host}:${port}/${db}`,
+        AWS_REGION: config.awsRegion,
+        POSTGRES_DSN: `postgres://${user}:${pass}@${host}/${db}`,
         PRODUCTS_BUCKET_ID: config.productsBucketId,
-        PRODUCTS_BUCKET_URL: `http://${config.productsBucketDomain}`,
+        PRODUCTS_BUCKET_URL: pulumi.interpolate`http://${config.productsBucketDomain}`,
         CARTS_DYNAMODB_TABLE_ID: config.cartTableId,
         MERCADOPAGO_PUBLIC_KEY: config.mercadopagoPublicKey,
         MERCADOPAGO_ACCESS_TOKEN: config.mercadopagoAccessToken,

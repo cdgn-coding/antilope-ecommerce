@@ -27,9 +27,8 @@ type Image struct {
 func (p Product) MarshalJSON() ([]byte, error) {
 	images := make([]string, len(p.Images))
 	baseUrl := os.Getenv("PRODUCTS_BUCKET_URL")
-	bucket := os.Getenv("PRODUCTS_BUCKET_ID")
 	for i, image := range p.Images {
-		images[i] = fmt.Sprintf("%s/%s/%s/%s.jpg", baseUrl, bucket, p.Sku, image.ID)
+		images[i] = fmt.Sprintf("%s/%s/%s.jpg", baseUrl, p.Sku, image.ID)
 	}
 
 	return json.Marshal(map[string]interface{}{
