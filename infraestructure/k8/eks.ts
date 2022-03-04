@@ -11,6 +11,8 @@ export const eksCluster = new eks.Cluster("eks", {
   privateSubnetIds: vpc.privateSubnetIds,
   deployDashboard: false,
   nodeAssociatePublicIpAddress: false,
+  minSize: 2,
+  maxSize: 4,
   tags,
 });
 

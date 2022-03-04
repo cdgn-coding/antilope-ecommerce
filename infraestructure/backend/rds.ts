@@ -14,23 +14,22 @@ export const rdsSubnets = new aws.rds.SubnetGroup(`${name}-subnets`, {
   subnetIds: vpc.privateSubnetIds, // Same subnets as EKS nodes.
 });
 
-export const rdsCluster = new aws.rds.Cluster(`${name}-cluster`, {
-  databaseName: "pulumi",
-  dbSubnetGroupName: rdsSubnets.id,
-  engine: "aurora-postgresql",
-  engineVersion: "11.6",
-  masterUsername: "pulumi",
-  masterPassword: dbPassword,
-  storageEncrypted: true,
-  skipFinalSnapshot: true,
-  vpcSecurityGroupIds: [eksCluster.nodeSecurityGroup.id], // Must be able to communicate with EKS nodes.
-  tags: tags,
-});
+export const databaseName = "antilope";
 
-export const instance = new aws.rds.ClusterInstance(name, {
-  clusterIdentifier: rdsCluster.id,
-  engine: "aurora-postgresql",
-  engineVersion: "11.6",
+export const rdsInstance = new aws.rds.Instance(name, {
+  allocatedStorage: 5,
+  engine: "postgres",
+  engineVersion: "12.9",
+  storageType: "standard",
+  licenseModel: "postgresql-license",
+  autoMinorVersionUpgrade: true,
   instanceClass: "db.t2.micro",
+  dbSubnetGroupName: rdsSubnets.id,
+  username: "antilope",
+  password: dbPassword,
+  skipFinalSnapshot: true,
+  vpcSecurityGroupIds: [eksCluster.nodeSecurityGroup.id],
+  publiclyAccessible: true,
   tags: tags,
+  name: databaseName,
 });

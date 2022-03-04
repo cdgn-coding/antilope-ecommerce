@@ -4,6 +4,7 @@
     "outDir": "bin",
     "target": "es2016",
     "module": "commonjs",
+    "lib": ["esnext"],
     "moduleResolution": "node",
     "sourceMap": true,
     "experimentalDecorators": true,
@@ -12,5 +13,5 @@
     "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true
   },
-  "files": ["index.ts"]
+  "files": ["**/*.ts"]
 }

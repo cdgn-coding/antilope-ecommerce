@@ -1,15 +1,20 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import SearchPurchasesByUserId from "src/services/purchases/SearchPurchasesByUserId";
-import { Response } from "@models/Response";
+import { PaginatedResponse } from "@models/PaginatedResponse";
 import { Purchase } from "@models/Purchase";
+import { withApiAuthRequired, getSession } from "@auth0/nextjs-auth0";
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Response<Purchase>>
+  res: NextApiResponse<PaginatedResponse<Purchase>>
 ) {
   const page = req.query?.page as string;
-  const userId = "fakeUserId";
+  // @ts-ignore
+  const { user } = getSession(req, res);
+  const userId = user?.sub;
   const json = await SearchPurchasesByUserId(userId, page);
   res.status(200).json(json);
 }
+
+export default withApiAuthRequired(handler);

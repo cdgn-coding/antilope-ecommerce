@@ -1,7 +1,7 @@
 import * as k8s from "@pulumi/kubernetes";
 import * as kx from "@pulumi/kubernetesx";
 import * as pulumi from "@pulumi/pulumi";
-import { config } from "./config";
+import { config } from "../config";
 import { types } from "@pulumi/kubernetesx";
 import EnvMap = types.EnvMap;
 
@@ -10,7 +10,7 @@ export interface DemoAppArgs {
   imageName: pulumi.Input<string>;
 }
 
-export class App extends pulumi.ComponentResource {
+export default class App extends pulumi.ComponentResource {
   // @ts-ignore
   public readonly imageName: pulumi.Output<string>;
   // @ts-ignore
@@ -29,7 +29,7 @@ export class App extends pulumi.ComponentResource {
     args: DemoAppArgs,
     opts: pulumi.ComponentResourceOptions = {}
   ) {
-    super("demo-app", name, args, opts);
+    super("antilope-backend", name, args, opts);
 
     // Create a Secret from the DB connection information.
     const dbConnSecret = new kx.Secret(
@@ -38,7 +38,6 @@ export class App extends pulumi.ComponentResource {
         metadata: { namespace: config.appsNamespaceName },
         stringData: {
           host: config.dbConnection.apply((db) => db.host),
-          port: config.dbConnection.apply((db) => db.port),
           username: config.dbConnection.apply((db) => db.username),
           password: config.dbConnection.apply((db) => db.password),
           database: config.dbConnection.apply((db) => db.database),
@@ -49,17 +48,19 @@ export class App extends pulumi.ComponentResource {
 
     const env = pulumi.all([dbConnSecret.stringData]).apply(([data]) => {
       const host = data["host"];
-      const port = data["port"];
       const user = data["username"];
       const pass = data["password"];
       const db = data["database"];
       return <EnvMap>{
-        PGHOST: host,
-        PGPORT: port,
-        PGUSER: user,
-        PGPASSWORD: pass,
-        PGDATABASE: db,
-        SQLALCHEMY_DATABASE_URI: `postgresql+psycopg2://${user}:${pass}@${host}:${port}/${db}`,
+        env: "prod",
+        HOST: ":8080",
+        AWS_REGION: config.awsRegion,
+        POSTGRES_DSN: `postgres://${user}:${pass}@${host}/${db}`,
+        PRODUCTS_BUCKET_ID: config.productsBucketId,
+        PRODUCTS_BUCKET_URL: pulumi.interpolate`http://${config.productsBucketDomain}`,
+        CARTS_DYNAMODB_TABLE_ID: config.cartTableId,
+        MERCADOPAGO_PUBLIC_KEY: config.mercadopagoPublicKey,
+        MERCADOPAGO_ACCESS_TOKEN: config.mercadopagoAccessToken,
       };
     });
 
@@ -68,10 +69,17 @@ export class App extends pulumi.ComponentResource {
       containers: [
         {
           env,
+          name: "antilope-backend",
           image: args.imageName,
           imagePullPolicy: "Always",
           resources: { requests: { cpu: "128m", memory: "128Mi" } },
-          ports: { http: 5050 },
+          ports: { http: 8080 },
+          livenessProbe: {
+            httpGet: {
+              path: "/ping",
+              port: 8080,
+            },
+          },
         },
       ],
     });
@@ -80,7 +88,7 @@ export class App extends pulumi.ComponentResource {
     this.deployment = new kx.Deployment(
       name,
       {
-        spec: pb.asDeploymentSpec({ replicas: 2 }),
+        spec: pb.asDeploymentSpec({ replicas: 1 }),
       },
       { provider: args.provider }
     );

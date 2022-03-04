@@ -1,7 +1,7 @@
 {
   "name": "workload",
   "devDependencies": {
-    "@types/node": "^14"
+    "@types/node": "^17.0.21"
   },
   "dependencies": {
     "@pulumi/aws": "^4.0.0",

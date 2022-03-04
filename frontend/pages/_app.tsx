@@ -1,9 +1,15 @@
 import "../styles/globals.css";
 import "../styles/properties.css";
 import type { AppProps } from "next/app";
+import { UserProvider } from "@auth0/nextjs-auth0";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const { user } = pageProps;
+  return (
+    <UserProvider user={user}>
+      <Component {...pageProps} />
+    </UserProvider>
+  );
 }
 
 export default MyApp;

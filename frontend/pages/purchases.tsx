@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Purchases from "@pages/Purchases";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 const PurchasesPage: NextPage = () => {
   return (
@@ -19,4 +20,4 @@ const PurchasesPage: NextPage = () => {
   );
 };
 
-export default PurchasesPage;
+export default withPageAuthRequired(PurchasesPage);
