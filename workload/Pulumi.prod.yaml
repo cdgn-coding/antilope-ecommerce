@@ -1,7 +1,17 @@
 config:
   aws:region: us-east-1
+  workload:auth0BaseUrl: http://antilope.demos.cdgn.website
+  workload:auth0ClientId:
+    secure: AAABAK0LkyCHgWQsQNjfNIE+JV6JjECGdZxhst6S4Z7jUCEarNJ6eshzGmTvu4jH4JaMQsRZOBtccjltuqwVmw==
+  workload:auth0ClientSecret:
+    secure: AAABANqlpodZPasftgB6dNT7+w7Az782Uv9qdqBW5UY6/L/V0Z8GoBOToyHoQJyMFuQzcvlFLPDvmr7ERVAYbPoLwG+z/NET3bwlLjuNzmRn9pvrTP3NoSRg/xG4CDlq
+  workload:auth0IssuerBaseUrl: https://antilope-prod.us.auth0.com
+  workload:auth0Secret:
+    secure: AAABADGCw7bJNSow0jOxZDzvcwEGDv3+PiBjSffkKYBkihCv4m446pLHozHUgxt47F4F9cSiChDcCHNYHaJnlP+hvCEOC1fdTZkdTNn0UrUIt45+mdXE9enk9i6Zbhdo
   workload:aws-region: us-east-1
+  workload:backendDir: ../backend
   workload:clusterStackRef: cdgn_pulumi_1/ecommerce-infraestructure/prod
+  workload:frontendDir: ../frontend
   workload:mercadopagoAccessToken:
     secure: AAABAIl286NjmozPcZ0NsjDbo5eQ/x1MU6ttnr4XqEdF50s1smK4jDAUm+j0uyK7qQkm+BrHVnYbVJ85FazQN9wY8ktHlMikaBKvE6vRWaTaIePicr5WdcdR1LIAhgDWo0jqQTh7gNXnUw==
   workload:mercadopagoPublicKey:

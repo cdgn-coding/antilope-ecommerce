@@ -1,7 +1,7 @@
 import * as k8s from "@pulumi/kubernetes";
 import * as kx from "@pulumi/kubernetesx";
 import * as pulumi from "@pulumi/pulumi";
-import { config } from "./config";
+import { config } from "../config";
 import { types } from "@pulumi/kubernetesx";
 import EnvMap = types.EnvMap;
 
@@ -10,7 +10,7 @@ export interface DemoAppArgs {
   imageName: pulumi.Input<string>;
 }
 
-export default class Backend extends pulumi.ComponentResource {
+export default class App extends pulumi.ComponentResource {
   // @ts-ignore
   public readonly imageName: pulumi.Output<string>;
   // @ts-ignore
@@ -38,7 +38,6 @@ export default class Backend extends pulumi.ComponentResource {
         metadata: { namespace: config.appsNamespaceName },
         stringData: {
           host: config.dbConnection.apply((db) => db.host),
-          port: config.dbConnection.apply((db) => db.port),
           username: config.dbConnection.apply((db) => db.username),
           password: config.dbConnection.apply((db) => db.password),
           database: config.dbConnection.apply((db) => db.database),
@@ -49,7 +48,6 @@ export default class Backend extends pulumi.ComponentResource {
 
     const env = pulumi.all([dbConnSecret.stringData]).apply(([data]) => {
       const host = data["host"];
-      const port = data["port"];
       const user = data["username"];
       const pass = data["password"];
       const db = data["database"];
@@ -90,7 +88,7 @@ export default class Backend extends pulumi.ComponentResource {
     this.deployment = new kx.Deployment(
       name,
       {
-        spec: pb.asDeploymentSpec({ replicas: 2 }),
+        spec: pb.asDeploymentSpec({ replicas: 1 }),
       },
       { provider: args.provider }
     );
