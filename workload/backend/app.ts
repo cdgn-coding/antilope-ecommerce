@@ -72,7 +72,7 @@ export default class App extends pulumi.ComponentResource {
           name: "antilope-backend",
           image: args.imageName,
           imagePullPolicy: "Always",
-          resources: { requests: { cpu: "128m", memory: "128Mi" } },
+          resources: { requests: { cpu: "128m", memory: "256Mi" } },
           ports: { http: 8080 },
           livenessProbe: {
             httpGet: {
@@ -88,7 +88,7 @@ export default class App extends pulumi.ComponentResource {
     this.deployment = new kx.Deployment(
       name,
       {
-        spec: pb.asDeploymentSpec({ replicas: 1 }),
+        spec: pb.asDeploymentSpec({ replicas: 2 }),
       },
       { provider: args.provider }
     );

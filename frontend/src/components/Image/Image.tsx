@@ -10,7 +10,7 @@ const Image = (props: ImageProps) => {
     return <NextImage {...props} unoptimized />;
   }
 
-  return <NextImage {...props} />;
+  return <NextImage {...props} unoptimized />;
 };
 
 export default Image;
