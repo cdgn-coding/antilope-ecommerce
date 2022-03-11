@@ -1,6 +1,7 @@
 import fetch from "cross-fetch";
 import faker from "@faker-js/faker";
 import FormData from "form-data";
+import { getItem, searchItems, MercadoLibreItem } from "./mercadolibre";
 
 export interface Product {
   name: string;
@@ -11,8 +12,7 @@ export interface Product {
   category: string;
 }
 
-export const createImage = async (): Promise<Response> => {
-  const url = faker.image.lorempicsum.imageRandomSeeded();
+export const createImage = async (url: string): Promise<Response> => {
   const response = await fetch(url);
   return await response;
 };
@@ -36,28 +36,35 @@ export const uploadImage = async (productSku: string, image: Response) => {
   });
 };
 
-export const uploadImages = async (product: Product) => {
-  for (let i = 0; i < faker.datatype.number({ min: 1, max: 4 }); i++) {
-    const image = await createImage();
-    await uploadImage(product.sku, image);
+export const uploadImages = async ({
+  product,
+  mercadoLibreItem,
+}: {
+  product: Product;
+  mercadoLibreItem: MercadoLibreItem;
+}) => {
+  for (let picture of mercadoLibreItem.pictures) {
+    const pictureContent = await createImage(picture.url);
+    await uploadImage(product.sku, pictureContent);
   }
 };
 
-export const createProduct = (): Product => {
-  const productName = faker.commerce.productName();
+export const createProduct = async ({
+  mercadoLibreItem,
+  category,
+}: {
+  mercadoLibreItem: MercadoLibreItem;
+  category: string;
+}): Promise<Product> => {
+  const productName = mercadoLibreItem.title;
   const sku = faker.helpers.slugify(productName);
   return {
     name: productName,
-    description: faker.commerce.productDescription(),
-    category: faker.random.arrayElement([
-      "WHITE",
-      "BROWN",
-      "GRAY",
-      "SMALL_APPS",
-    ]),
+    description: mercadoLibreItem.description.plain_text,
+    category,
     sku: sku,
-    price: Number(faker.commerce.price()),
-    stock: faker.datatype.number({ min: 0, max: 100 }),
+    price: mercadoLibreItem.price,
+    stock: mercadoLibreItem.available_quantity,
   };
 };
 
@@ -72,10 +79,45 @@ export const uploadProduct = async (product: Product) => {
   return response.json();
 };
 
+const scrapePlans = [
+  {
+    category: "WHITE",
+    terms: ["lavarropas", "secarropas", "heladeras"],
+    limitEach: 10,
+  },
+  {
+    category: "BROWN",
+    terms: ["televisor", "parlantes", "home theater"],
+    limitEach: 10,
+  },
+  {
+    category: "GRAY",
+    terms: ["celulares", "notebook", "tablet"],
+    limitEach: 10,
+  },
+  {
+    category: "SMALL_APPS",
+    terms: ["plancha", "aspiradora", "ventilador"],
+    limitEach: 4,
+  },
+];
+
 export const populateProducts = async (total: number) => {
-  for (let i = 0; i < total; i++) {
-    const product = createProduct();
-    await uploadProduct(product);
-    await uploadImages(product);
+  for (let plan of scrapePlans) {
+    const { category, terms, limitEach } = plan;
+    for (let term of terms) {
+      const searchResponse = await searchItems(term, limitEach);
+      const items = await Promise.all(
+        searchResponse.map((result) => getItem(result.id))
+      );
+      for (let item of items) {
+        const product = await createProduct({
+          mercadoLibreItem: item,
+          category,
+        });
+        await uploadProduct(product);
+        await uploadImages({ product, mercadoLibreItem: item });
+      }
+    }
   }
 };

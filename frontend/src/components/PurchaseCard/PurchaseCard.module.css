@@ -11,7 +11,7 @@
 }
 
 .imageContainer img {
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .productName {

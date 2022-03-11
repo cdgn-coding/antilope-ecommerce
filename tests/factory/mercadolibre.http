@@ -1,0 +1,8 @@
+### Get Item
+GET https://api.mercadolibre.com/items/MLA1103053140
+
+### Buscar Items
+GET https://api.mercadolibre.com/sites/MLA/search?q=lavarropas&limit=10
+
+### Get Description
+GET https://api.mercadolibre.com/items/MLA1103053140/description
