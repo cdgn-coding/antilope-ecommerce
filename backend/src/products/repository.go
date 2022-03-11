@@ -29,7 +29,7 @@ func (r repository) GetProduct(sku string) (Product, error) {
 func (r repository) SearchProductsMatching(product Product, offset, limit int) ([]Product, error) {
 	db := clients.GormClient
 	var products []Product
-	result := db.Preload("Images").Where(&product).Find(&products).Offset(offset).Limit(limit)
+	result := db.Preload("Images").Where(&product).Offset(offset).Limit(limit).Find(&products)
 	return products, result.Error
 }
 

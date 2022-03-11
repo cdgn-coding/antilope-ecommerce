@@ -54,7 +54,7 @@ const Layout = (props: LayoutProps) => {
             onSelectItem={onSelectSecondaryItem}
           />
         )}
-        {!loading && children}
+        {!loading && <div className={styles.page}>{children}</div>}
         {loading && (
           <div className={styles.layoutSpinner}>
             <Spinner />

@@ -28,7 +28,7 @@ const SecondaryMenuButtonWithoutLink = ({
 }: SecondaryMenuButtonProps) => {
   return (
     <div className={styles.item}>
-      <Button type="primary" onClick={onClick}>
+      <Button type="primary" onClick={onClick} size="medium">
         {label}
       </Button>
     </div>
