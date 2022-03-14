@@ -12,7 +12,7 @@ export const eksCluster = new eks.Cluster("eks", {
   deployDashboard: false,
   nodeAssociatePublicIpAddress: false,
   minSize: 2,
-  desiredCapacity: 4,
+  desiredCapacity: 2,
   maxSize: 4,
   tags,
 });

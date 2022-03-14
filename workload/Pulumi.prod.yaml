@@ -1,6 +1,6 @@
 config:
   aws:region: us-east-1
-  workload:auth0BaseUrl: http://antilope.demos.cdgn.website
+  workload:auth0BaseUrl: http://antilope-demo.cdgn.website
   workload:auth0ClientId:
     secure: AAABAK0LkyCHgWQsQNjfNIE+JV6JjECGdZxhst6S4Z7jUCEarNJ6eshzGmTvu4jH4JaMQsRZOBtccjltuqwVmw==
   workload:auth0ClientSecret:
