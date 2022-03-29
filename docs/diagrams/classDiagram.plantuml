@@ -1,0 +1,69 @@
+@startuml classDiagram
+
+class Producto {
+  sku: String
+  nombre: String
+  precio: Float
+  descripcion: String
+  categoria: String
+  stock: Int
+  imagenes: String[]
+
+  crear()
+  actualizar()
+  ver()
+  listar()
+  agregarImagen()
+}
+
+class ItemCarrito {
+  cantidad: Int
+}
+
+class Carrito {
+  agregarProducto()
+  cambiarCantidad()
+  eliminarProducto()
+}
+
+class Usuario {
+  email: String
+  registrar()
+}
+
+class Compra {
+  monto: Float
+  estado: EstadoDeCompra
+  listar()
+  comprarProducto()
+  comprarCarrito()
+  recibirNotificacionDeMercadoPago()
+}
+
+class Pago {
+  mercadoPagoURL: String
+  mercadoPagoOrder: String
+}
+
+class Pack {
+  cantidad: Int
+  monto: Float
+}
+
+enum EstadoDeCompra {
+  Creada
+  PagoPendiente
+  Completada
+}
+
+Carrito "1" --* "n" ItemCarrito
+ItemCarrito "*" --o "1" Producto
+Carrito "*" --o "1" Usuario
+
+Compra "*" --o "1" Usuario
+Compra "1" --* "1" Pago
+Compra "1" --* "n" Pack
+Pack "*" --o "1" Producto
+Compra --* EstadoDeCompra
+
+@enduml

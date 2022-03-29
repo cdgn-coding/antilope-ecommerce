@@ -1,0 +1,55 @@
+@startuml
+
+top to bottom direction
+
+node Cliente as "Cliente" {
+  artifact Browser
+}
+
+node Desarrollador as "Notebook Desarrollador" {
+  artifact workload
+  artifact infraestructure
+}
+
+package "Amazon Web Services" {
+  package "Cluster de Kubernetes" {
+    node "t2.medium (Master)" as Node1 {
+      component "Frontend Deployment" {
+        component "Frontend ReplicaSet" {
+          component FrontendPod {
+            artifact "antilope-frontend:latest" as FrontendContainer
+          }
+
+        }
+        component FrontendService as "Frontend Service"
+      }
+    }
+
+    node "t2.medium (Worker)" as Node2 {
+      component "Backend Deployment" {
+        component "Backend ReplicaSet" {
+          component BackendPod {
+            artifact "antilope-backend:latest" as BackendContainer
+          }
+        }
+        component BackendService as "Backend Service" 
+      }
+    }
+
+  }
+
+  cloud "Nube Privada virtual" as VPC
+  node Database as "db.t2.micro" {
+    component PostgreSQL
+  }
+}
+
+
+Node1 -- VPC
+Node2 -- VPC
+VPC -- PostgreSQL
+Cliente -- Node1
+Desarrollador -- Node1
+
+
+@enduml

@@ -23,24 +23,22 @@ type Purchase struct {
 	UserID    string    `json:"userId"`
 	Amount    float64   `json:"amount"`
 	Status    string    `json:"status"`
-	Payment   Payment   `json:"payment"`
-	Packs     []Pack    `json:"packs"`
+	Payment   Payment   `json:"payment" gorm:"foreignkey:PurchaseID"`
+	Packs     []Pack    `json:"packs" gorm:"foreignkey:PurchaseID"`
 	InvoiceID string    `json:"invoiceId"`
 	CreatedAt time.Time `json:"createdAt" gorm:"autoUpdateTime"`
 	UpdatedAt time.Time `json:"updatedAt" gorm:"autoCreateTime"`
 }
 
 type Payment struct {
-	ID               string `json:"id" gorm:"primaryKey"`
-	PurchaseID       string `json:"purchaseId" gorm:"index"`
+	PurchaseID       string `json:"purchaseId" gorm:"primaryKey"`
 	MercadoPagoURL   string `json:"mercadoPagoURL"`
 	MercadoPagoOrder int64  `json:"mercadoPagoOrder,omitempty"`
 }
 
 type Pack struct {
-	ID         string           `json:"id" gorm:"primaryKey"`
-	PurchaseID string           `json:"purchaseId"`
-	ProductSku string           `json:"productSku" gorm:"index"`
+	PurchaseID string           `json:"purchaseId" gorm:"primaryKey"`
+	ProductSku string           `json:"productSku" gorm:"primaryKey`
 	Product    products.Product `json:"product" gorm:"foreignKey:ProductSku"`
 	Quantity   int64            `json:"quantity"`
 	Amount     float64          `json:"amount"`
@@ -64,13 +62,8 @@ func (p Purchase) createPurchase(userId string) (Purchase, error) {
 }
 
 func (purchase *Purchase) addPack(product products.Product, quantity int64) (Purchase, error) {
-	id, err := ksuid.NewRandom()
-	if err != nil {
-		return Purchase{}, err
-	}
 	packAmount := product.Price * float64(quantity)
 	pack := Pack{
-		ID:         id.String(),
 		PurchaseID: purchase.ID,
 		ProductSku: product.Sku,
 		Product:    product,
@@ -85,13 +78,8 @@ func (purchase *Purchase) addPack(product products.Product, quantity int64) (Pur
 }
 
 func (purchase *Purchase) createPayment(mercadoPagoInitPoint, mercadoPagoPreference string) (Purchase, error) {
-	id, err := ksuid.NewRandom()
-	if err != nil {
-		return Purchase{}, err
-	}
 	purchase.Status = WAITING_PAYMENT
 	purchase.Payment = Payment{
-		ID:             id.String(),
 		PurchaseID:     purchase.ID,
 		MercadoPagoURL: mercadoPagoInitPoint,
 	}

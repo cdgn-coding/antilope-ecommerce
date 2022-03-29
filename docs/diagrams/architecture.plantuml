@@ -1,0 +1,67 @@
+@startuml
+
+!include <awslib/AWSCommon>
+
+' Uncomment the following line to create simplified view
+' !include <awslib/AWSSimplified>
+
+!include <awslib/General/Users>
+!include <awslib/Mobile/APIGateway>
+!include <awslib/SecurityIdentityAndCompliance/Cognito>
+!include <awslib/Compute/Lambda>
+!include <awslib/Database/DynamoDB>
+!include <awslib/Storage/SimpleStorageService>
+!include <awslib/NetworkingContentDelivery/CloudFront>
+
+top to bottom direction
+
+package "VPN" {
+  node "ERP Next Server" as ERP
+  node "ERP Database" as ERPDatabase
+  node "Notebook empleado" as Notebook
+  node Router
+}
+
+actor "Empleado" as Empleado
+actor "Cliente" as Cliente
+
+package "Amazon Web Services" as AWS {
+  package "Cluster Elastic Kubernetes Service" {
+    node "Node 1 (Master)" as Master {
+      component Frontend
+    }
+    node "Node 2 (Worker)" as Worker {
+      component Backend
+    }
+  }
+
+  node "PostgreSQL" as PostgresNode
+  cloud "Nube privada virtual" as VPC
+  SimpleStorageService(S3, "Bucket de archivos", "Imagenes de productos")
+  DynamoDB(DynamoDB, "Carrito de compras", "Máximo un registro por usuario")
+  CloudFront(CloudFront, "DNS", "Zona alojada en CloudFront")
+}
+
+cloud Internet
+
+ERP -- Router
+ERPDatabase -- Router
+Notebook -- Router
+Empleado -- Notebook
+
+Master -- VPC
+Worker -- VPC
+PostgresNode -- VPC
+
+Router -- Internet
+Cliente -- Internet
+
+Internet -- CloudFront
+Backend -left- S3
+Backend -- DynamoDB
+
+CloudFront -- S3
+CloudFront -- Master
+
+
+@enduml

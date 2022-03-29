@@ -1,0 +1,8 @@
+@startuml
+
+[*] --> Creada
+Creada --> Pendiente: Se creó un flujo nuevo de MercadoPago
+Pendiente --> Completada: El cliente completó el flujo de pago
+Pendiente --> Pendiente: El cliente salió del flujo de pago
+Completada --> [*]
+@enduml

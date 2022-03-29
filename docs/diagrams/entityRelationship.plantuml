@@ -1,0 +1,73 @@
+@startuml EntityDiagram
+
+Entity Producto {
+  * sku
+  --
+  * nombre
+  * precio
+  * descripcion
+  * categoria
+  * stock
+}
+
+Entity Imagen {
+  * ID
+  --
+  * skuProducto
+}
+
+Entity ItemCarrito {
+  * userID
+  * skuProducto
+  --
+  * cantidad
+}
+
+Entity Carrito {
+  * userID
+  --
+  * fechaDeCreacion
+  * fechaDeActualizacion
+}
+
+Entity Usuario {
+  * userID
+  --
+  * email
+}
+
+Entity Compra {
+  * ID
+  --
+  * userID
+  * monto
+  * estado
+  * fechaDeCreacion
+  * fechaDeActualizacion
+}
+
+Entity Pago {
+  * compraID
+  --
+  * mercadoPagoURL
+  * mercadoPagoOrder
+}
+
+Entity Pack {
+  * compraID
+  * skuProducto
+  --
+  * cantidad
+  * monto
+}
+
+Carrito ||--|{ ItemCarrito
+Carrito |o--|| Usuario
+ItemCarrito }o--|| Producto
+
+Compra }o--|| Usuario
+Compra ||--|| Pago
+Compra ||--|{ "n" Pack
+Pack }o--|| Producto
+Producto ||--|{ Imagen
+@enduml
