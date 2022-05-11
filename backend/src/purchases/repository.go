@@ -2,6 +2,8 @@ package purchases
 
 import (
 	"fmt"
+	"github.com/cdgn-coding/antilope-ecommerce/backend/src/products"
+	"gorm.io/gorm"
 
 	"github.com/cdgn-coding/antilope-ecommerce/backend/src/clients"
 )
@@ -10,7 +12,33 @@ type repository struct{}
 
 func (r repository) CreatePurchase(purchase Purchase) error {
 	db := clients.GormClient
-	return db.Create(&purchase).Error
+	err := db.Transaction(func(tx *gorm.DB) error {
+		err := db.Create(&purchase).Error
+		if err != nil {
+			return err
+		}
+
+		for _, pack := range purchase.Packs {
+			product := products.Product{}
+			db.Select("stock").Where("sku = ?", pack.ProductSku).First(&product)
+
+			if (product.Stock - pack.Quantity) < 0 {
+				return fmt.Errorf("cannot buy more than it exist")
+			}
+
+			err = db.Model(&products.Product{}).
+				Where("sku = ?", pack.ProductSku).
+				Update("stock", gorm.Expr("stock - ?", pack.Quantity)).
+				Error
+
+			if err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
+	return err
 }
 
 func (r repository) GetTotalPurchasesByUserId(userId string) (int64, error) {

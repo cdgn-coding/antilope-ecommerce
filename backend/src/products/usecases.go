@@ -40,29 +40,15 @@ func (u Usecases) GetProduct(sku string) (*Product, error) {
 }
 
 func (u Usecases) SearchProducts(search, category string, page int) (responses.PaginatedResponse, error) {
-	var product Product
-
-	if category != "" {
-		product.Category = category
-	}
-
-	if search != "" {
-		product.Name = search
-	}
-
-	if page == 0 {
-		page = 1
-	}
-
 	limit := 15
-	offset := page * limit
-	products, err := repository{}.SearchProductsMatching(product, offset, limit)
+	offset := (page - 1) * limit
+	products, err := repository{}.SearchProducts(search, category, offset, limit)
 
 	if err != nil {
 		return responses.PaginatedResponse{}, fmt.Errorf("Error searching products: %w", err)
 	}
 
-	totalItems, err := repository{}.GetTotalProductsMatching(product)
+	totalItems, err := repository{}.GetTotalProductsMatching(search, category)
 	if err != nil {
 		return responses.PaginatedResponse{}, fmt.Errorf("Error counting products: %w", err)
 	}

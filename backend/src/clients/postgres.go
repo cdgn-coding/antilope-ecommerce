@@ -1,6 +1,7 @@
 package clients
 
 import (
+	"gorm.io/gorm/logger"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -12,7 +13,10 @@ func getPostgresClient() *gorm.DB {
 	db, err := gorm.Open(postgres.New(postgres.Config{
 		DSN:                  dsn,
 		PreferSimpleProtocol: true,
-	}), &gorm.Config{})
+	}), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Error),
+	})
+
 	if err != nil {
 		panic(err)
 	}

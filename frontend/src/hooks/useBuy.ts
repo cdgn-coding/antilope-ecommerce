@@ -24,6 +24,9 @@ const useBuy = () => {
         push(`/api/auth/login?returnTo=${encodeURIComponent(pathname)}`);
         break;
       }
+      default: {
+        alert("No se pudo realizar la compra.");
+      }
     }
   };
 
@@ -43,6 +46,9 @@ const useBuy = () => {
         const pathname = document.location.pathname;
         push(`/api/auth/login?returnTo=${encodeURIComponent(pathname)}`);
         break;
+      }
+      default: {
+        alert("No se pudo realizar la compra.");
       }
     }
   };

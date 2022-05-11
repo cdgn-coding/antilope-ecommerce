@@ -14,7 +14,7 @@ content-type: application/json
 GET http://localhost:8080/products/productId
 
 ### Search Products
-GET http://localhost:8080/products/
+GET http://localhost:8080/products/?search=lavarropas
 
 ### Add Image to Product
 POST http://localhost:8080/products/productId/images
