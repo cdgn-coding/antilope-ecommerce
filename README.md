@@ -116,3 +116,7 @@ cd infraestructure && pulumi up -y
 ```
 cd workload && pulumi up -y
 ```
+
+That command will output the URLs of the load balancers backend and frontend.
+The frontend is automatically connected to the backend with an environment variable,
+and the URL can be connected to a domain using an A record within a Hosted Zone.
