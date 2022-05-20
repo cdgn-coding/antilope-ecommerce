@@ -83,7 +83,7 @@ You should create an account in MercadoPago developers and Auth0 in order to run
 - Run `make dev-backend` and `make migration`
 - Run `make dev-frontend`
 
-### In the cloud
+#### In the cloud
 
 Make sure to login with Pulumi and AWS before trying to deploy to the cloud.
 
@@ -119,6 +119,6 @@ cd infraestructure && pulumi up -y
 cd workload && pulumi up -y
 ```
 
-That command will output the URLs of the load balancers backend and frontend.
+That command will output the URLs of the load balancers (backend and frontend).
 The frontend is automatically connected to the backend with an environment variable,
-and the URL can be connected to a domain using an A record within a Hosted Zone.
+and the URL can be mapped to a domain using an A record within a Hosted Zone.
