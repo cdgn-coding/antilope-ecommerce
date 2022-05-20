@@ -11,7 +11,7 @@ Some requirements of this project are
 - Explore products by name and category
 
 A more extensive documentation of the context and design of this project
-can be found [here](https://docs.google.com/document/d/1hI4huRD1ojuUk7dDCXsh_FNm9_rkRrWt/edit?usp=sharing&ouid=104504820085978477639&rtpof=true&sd=true).
+can be found [here](https://docs.google.com/document/d/1hI4huRD1ojuUk7dDCXsh_FNm9_rkRrWt/edit?usp=sharing&ouid=104504820085978477639&rtpof=true&sd=true) (spanish language only).
 
 ## Development
 
@@ -34,7 +34,9 @@ Antilope Ecommerce is developed with the following tech stack
 
 ```
 📦docs
+ // Entity-relation, usecases, and state diagrams.
  ┣ 📂diagrams
+ // Screenshots of the functioning app
  ┣ 📂screns
 📦.github
 📦backend
